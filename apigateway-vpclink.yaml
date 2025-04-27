@@ -1,0 +1,93 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: API Gateway REST API con VPC Link y Lambda Authorizer
+
+Parameters:
+  NlbDns:
+    Type: String
+
+  NlbArn:
+    Type: String
+
+  AuthorizerLambdaArn:
+    Type: String
+    Description: ARN del Lambda Authorizer
+
+Resources:
+
+  VpcLink:
+    Type: AWS::ApiGateway::VpcLink
+    Properties:
+      Name: gamer-vpc-link
+      TargetArns:
+        - !Ref NlbArn
+
+  RestApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: gamer-rest-api
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+
+  Authorizer:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: gamer-lambda-authorizer
+      Type: TOKEN
+      IdentitySource: method.request.header.Authorization
+      RestApiId: !Ref RestApi
+      AuthorizerUri: !Sub
+        - arn:aws:apigateway:${Region}:lambda:path/2015-03-31/functions/${LambdaArn}/invocations
+        - {
+            Region: !Ref "AWS::Region",
+            LambdaArn: !Ref AuthorizerLambdaArn
+          }
+
+  RootResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: 
+        Fn::GetAtt:
+          - RestApi
+          - RootResourceId
+      PathPart: "{proxy+}"
+      RestApiId: !Ref RestApi
+
+  ProxyMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref RestApi
+      ResourceId: !Ref RootResource
+      HttpMethod: ANY
+      AuthorizationType: CUSTOM
+      AuthorizerId: !Ref Authorizer
+      RequestParameters:
+        method.request.path.proxy: true
+      Integration:
+        Type: HTTP
+        IntegrationHttpMethod: POST
+        Uri: !Sub "http://${NlbDns}/{proxy}"
+        ConnectionType: VPC_LINK
+        ConnectionId: !Ref VpcLink
+        PassthroughBehavior: WHEN_NO_MATCH
+        IntegrationResponses:
+          - StatusCode: 200
+            ResponseTemplates:
+              application/json: ""
+      MethodResponses:
+        - StatusCode: 200
+
+  ApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn: ProxyMethod
+    Properties:
+      RestApiId: !Ref RestApi
+      StageName: prod
+
+Outputs:
+  RestApiId:
+    Value: !Ref RestApi
+
+  ApiEndpoint:
+    Description: URL publica del API Gateway
+    Value: !Sub "https://${RestApi}.execute-api.${AWS::Region}.amazonaws.com/prod/"

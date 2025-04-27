@@ -1,0 +1,141 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: ECS Fargate Service con 2 tareas (1 contenedor por AZ)
+
+Parameters:
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+
+  PrivateSubnets:
+    Type: List<AWS::EC2::Subnet::Id>
+
+  ContainerImage:
+    Type: String
+    Description: Imagen ECR de la app (ej. 123456789.dkr.ecr.us-east-1.amazonaws.com/demo-app:latest)
+
+  TargetGroupArn:
+    Type: String
+
+  FargateSecurityGroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+
+  AuroraSecretArn:
+    Type: String
+    Description: ARN del secreto que contiene las credenciales de Aurora
+
+  AuroraHost:
+    Type: String
+    Description: Endpoint de Aurora
+
+  AuroraPort:
+    Type: String
+    Default: "3306"
+
+Resources:
+
+  # Cluster ECS
+  GamerEcsCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: gamer-cluster
+
+  # IAM Role con acceso al Secret de Aurora
+  FargateTaskRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: gamer-task-secrets-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: AccessToAuroraSecrets
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - secretsmanager:GetSecretValue
+                Resource: !Ref AuroraSecretArn
+
+  # IAM Role para ejecutar la tarea (logs, etc.)
+  TaskExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: gamer-task-execution-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+
+  GamerLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /ecs/gamer-app
+      RetentionInDays: 7
+  
+
+  # Task Definition
+  GamerTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: gamer-task
+      Cpu: '512'
+      Memory: '1024'
+      NetworkMode: awsvpc
+      RequiresCompatibilities: [FARGATE]
+      ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
+      TaskRoleArn: !GetAtt FargateTaskRole.Arn
+      ContainerDefinitions:
+        - Name: apiflask-container
+          Image: !Ref ContainerImage
+          PortMappings:
+            - ContainerPort: 5000
+              Protocol: tcp
+          Environment:
+            - Name: AURORA_HOST
+              Value: !Ref AuroraHost
+            - Name: AURORA_PORT
+              Value: !Ref AuroraPort
+            - Name: AURORA_SECRET_ARN
+              Value: !Ref AuroraSecretArn
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: /ecs/gamer-app
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: gamer
+
+  # ECS Service con 2 réplicas en Fargate
+  GamerEcsService:
+    Type: AWS::ECS::Service
+    DependsOn: GamerEcsCluster
+    Properties:
+      ServiceName: gamer-ecs-service
+      Cluster: !Ref GamerEcsCluster
+      LaunchType: FARGATE
+      DesiredCount: 1
+      TaskDefinition: !Ref GamerTaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets: !Ref PrivateSubnets
+          SecurityGroups: [!Ref FargateSecurityGroupId]
+      LoadBalancers:
+        - TargetGroupArn: !Ref TargetGroupArn
+          ContainerName: apiflask-container
+          ContainerPort: 5000
+
+Outputs:
+  EcsClusterName:
+    Value: !Ref GamerEcsCluster
+
+  EcsServiceName:
+    Value: !Ref GamerEcsService

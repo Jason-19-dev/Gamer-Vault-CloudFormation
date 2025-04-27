@@ -1,0 +1,79 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: VPC Endpoints para permitir acceso a Amazon ECR desde ECS en subnets privadas
+
+Parameters:
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+
+  SubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+
+  FargateSecurityGroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+
+Resources:
+
+  # SG dedicado para los endpoints ECR
+  EcrVpcEndpointSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow HTTPS from Fargate to ECR endpoints
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          SourceSecurityGroupId: !Ref FargateSecurityGroupId
+      Tags:
+        - Key: Name
+          Value: ecr-vpc-endpoint-sg
+
+  EcrApiEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      ServiceName: !Sub com.amazonaws.${AWS::Region}.ecr.api
+      VpcId: !Ref VpcId
+      SubnetIds: !Ref SubnetIds
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: true
+      SecurityGroupIds:
+        - !Ref EcrVpcEndpointSecurityGroup
+      Tags:
+        - Key: Name
+          Value: ecr-api-endpoint
+
+  EcrDkrEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      ServiceName: !Sub com.amazonaws.${AWS::Region}.ecr.dkr
+      VpcId: !Ref VpcId
+      SubnetIds: !Ref SubnetIds
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: true
+      SecurityGroupIds:
+        - !Ref EcrVpcEndpointSecurityGroup
+      Tags:
+        - Key: Name
+          Value: ecr-dkr-endpoint
+
+  #Crear un VPC Endpoint para que Fargate se pueda conectar a Secrets Manager
+  SecretsManagerVPCEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref VpcId
+      ServiceName: !Sub com.amazonaws.${AWS::Region}.secretsmanager
+      VpcEndpointType: Interface
+      SubnetIds: !Ref SubnetIds
+      PrivateDnsEnabled: true
+      SecurityGroupIds:
+        - !Ref FargateSecurityGroupId
+      Tags:
+          - Key: Name
+            Value: fargate-secret-endpoint
+
+Outputs:
+  EcrApiEndpointId:
+    Value: !Ref EcrApiEndpoint
+
+  EcrDkrEndpointId:
+    Value: !Ref EcrDkrEndpoint

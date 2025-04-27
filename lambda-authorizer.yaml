@@ -1,0 +1,67 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Lambda Authorizer para API Gateway
+
+Resources:
+  AuthorizerFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: gamer-authorizer
+      Handler: index.handler
+      Runtime: python3.11
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        ZipFile: |
+          def lambda_handler(event, context):
+              print('*********** Event Lambda Authorizer ***************')
+              print(event)
+              
+              auth = 'Deny'
+              
+              if event['authorizationToken'] == 'ggeasy':
+                  auth = 'Allow'
+              else:
+                  auth = 'Deny'
+              
+              authResponse = {
+                  "principalId": "ggeasy", 
+                  "policyDocument": { 
+                      "Version": "2012-10-17", 
+                      "Statement": [
+                          {
+                              "Action": "execute-api:Invoke", 
+                              "Resource": ["arn:aws:execute-api:us-east-1:862695242185:jnsxhgzktf/prod/*/*"], 
+                              "Effect": auth
+                          }
+                      ] 
+                  }
+              }
+              return authResponse
+
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: gamer-authorizer-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: AllowLogs
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "*"
+
+Outputs:
+  AuthorizerLambdaArn:
+    Value: !GetAtt AuthorizerFunction.Arn
+    Export:
+      Name: gamer-authorizer-arn

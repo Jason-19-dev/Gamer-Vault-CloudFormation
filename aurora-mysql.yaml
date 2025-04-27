@@ -1,0 +1,84 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Aurora MySQL Cluster en subnets privadas con Secrets Manager
+
+Parameters:
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+  SubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+
+Resources:
+
+  # Security Group para Aurora
+  AuroraSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group para Aurora
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: 10.0.0.0/16 
+      Tags:
+        - Key: Name
+          Value: aurora-mysql-sg
+
+  # Secrets Manager para almacenar credenciales
+  DBSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: aurora-mysql-secret
+      Description: Credenciales del clúster Aurora MySQL
+      GenerateSecretString:
+        SecretStringTemplate: '{"username": "admin"}'
+        GenerateStringKey: "password"
+        PasswordLength: 16
+        ExcludeCharacters: '"@/\'
+
+  # Subnet group para Aurora
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Subnets privadas para Aurora
+      SubnetIds: !Ref SubnetIds
+      DBSubnetGroupName: aurora-subnet-group
+
+  # Aurora MySQL Cluster
+  AuroraCluster:
+    Type: AWS::RDS::DBCluster
+    Properties:
+      Engine: aurora-mysql
+      EngineVersion: "8.0.mysql_aurora.3.05.2"
+      EngineMode: provisioned
+      DBClusterIdentifier: aurora-gamer-cluster
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      VpcSecurityGroupIds:
+        - !Ref AuroraSecurityGroup
+      MasterUsername: !Join ['', ['{{resolve:secretsmanager:', !Ref DBSecret, ':SecretString:username}}']]
+      MasterUserPassword: !Join ['', ['{{resolve:secretsmanager:', !Ref DBSecret, ':SecretString:password}}']]
+      StorageEncrypted: true
+      StorageType: aurora
+      BackupRetentionPeriod: 7
+      PreferredBackupWindow: 03:00-04:00
+      PreferredMaintenanceWindow: sun:04:00-sun:05:00
+      DeletionProtection: false
+
+  # Aurora DB Instance (t3.medium)
+  AuroraInstance1:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t3.medium
+      Engine: aurora-mysql
+      DBClusterIdentifier: !Ref AuroraCluster
+      PubliclyAccessible: false
+      DBInstanceIdentifier: aurora-gamer-instance-1
+
+Outputs:
+  ClusterEndpoint:
+    Description: Endpoint del clúster Aurora
+    Value: !GetAtt AuroraCluster.Endpoint.Address
+
+  SecretArn:
+    Description: ARN del secreto con credenciales
+    Value: !Ref DBSecret
