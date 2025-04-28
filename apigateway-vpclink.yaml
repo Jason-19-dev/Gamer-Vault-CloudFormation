@@ -95,8 +95,6 @@ Resources:
       ResourceId: !Ref ProductsResource
       HttpMethod: GET
       AuthorizationType: NONE
-      RequestParameters:
-        method.request.path.proxy: true
       Integration:
         Type: HTTP
         IntegrationHttpMethod: GET
@@ -123,8 +121,6 @@ Resources:
       ResourceId: !Ref VideogamesResource
       HttpMethod: GET
       AuthorizationType: NONE
-      RequestParameters:
-        method.request.path.proxy: true
       Integration:
         Type: HTTP
         IntegrationHttpMethod: GET
@@ -145,6 +141,13 @@ Resources:
     Properties:
       RestApiId: !Ref RestApi
       StageName: prod
+  
+  LambdaPermissionForApiGateway:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref AuthorizerLambdaArn
+      Principal: apigateway.amazonaws.com
 
 Outputs:
   RestApiId:

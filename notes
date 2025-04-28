@@ -1,5 +1,5 @@
 aws ssm start-session \
-  --target i-00a00e63202faa5c0 \
+  --target i-01292c66219578efa \
   --document-name AWS-StartPortForwardingSessionToRemoteHost \
   --parameters "host=aurora-gamer-cluster.cluster-cyfsgymecqt5.us-east-1.rds.amazonaws.com,portNumber=3306,localPortNumber=3307" \
   --region us-east-1

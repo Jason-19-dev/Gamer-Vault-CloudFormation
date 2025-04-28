@@ -7,6 +7,10 @@
 --
 -- Table structure for table `categories`
 --
+CREATE DATABASE gamervaultlts;
+
+USE gamervaultlts;
+
 
 DROP TABLE IF EXISTS `categories`;
 

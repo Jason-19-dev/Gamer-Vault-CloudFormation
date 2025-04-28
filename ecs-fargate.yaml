@@ -60,6 +60,7 @@ Resources:
                   - secretsmanager:GetSecretValue
                 Resource: !Ref AuroraSecretArn
 
+
   # IAM Role para ejecutar la tarea (logs, etc.)
   TaskExecutionRole:
     Type: AWS::IAM::Role
