@@ -56,6 +56,7 @@ Resources:
         - Key: Name
           Value: ecr-dkr-endpoint
 
+
   #Crear un VPC Endpoint para que Fargate se pueda conectar a Secrets Manager
   SecretsManagerVPCEndpoint:
     Type: AWS::EC2::VPCEndpoint
@@ -66,7 +67,7 @@ Resources:
       SubnetIds: !Ref SubnetIds
       PrivateDnsEnabled: true
       SecurityGroupIds:
-        - !Ref FargateSecurityGroupId
+        - !Ref EcrVpcEndpointSecurityGroup
       Tags:
           - Key: Name
             Value: fargate-secret-endpoint

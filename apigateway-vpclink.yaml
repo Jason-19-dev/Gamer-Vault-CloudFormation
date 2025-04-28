@@ -42,44 +42,106 @@ Resources:
             Region: !Ref "AWS::Region",
             LambdaArn: !Ref AuthorizerLambdaArn
           }
+  
+  # RootResource:
+  # Type: AWS::ApiGateway::Resource
+  # Properties:
+  #   ParentId: 
+  #     Fn::GetAtt:
+  #       - RestApi
+  #       - RootResourceId
+  #   PathPart: "{proxy+}"
+  #   RestApiId: !Ref RestApi
 
-  RootResource:
+  # ProxyMethod:
+  #   Type: AWS::ApiGateway::Method
+  #   Properties:
+  #     RestApiId: !Ref RestApi
+  #     ResourceId: !Ref RootResource
+  #     HttpMethod: ANY
+  #     AuthorizationType: CUSTOM
+  #     AuthorizerId: !Ref Authorizer
+  #     RequestParameters:
+  #       method.request.path.proxy: true
+  #     Integration:
+  #       Type: HTTP
+  #       IntegrationHttpMethod: POST
+  #       Uri: !Sub "http://${NlbDns}/{proxy}"
+  #       ConnectionType: VPC_LINK
+  #       ConnectionId: !Ref VpcLink
+  #       PassthroughBehavior: WHEN_NO_MATCH
+  #       IntegrationResponses:
+  #         - StatusCode: 200
+  #           ResponseTemplates:
+  #             application/json: ""
+  #     MethodResponses:
+  #       - StatusCode: 200
+  
+  #Resource /products
+  ProductsResource:
     Type: AWS::ApiGateway::Resource
     Properties:
+      RestApiId: !Ref RestApi
       ParentId: 
         Fn::GetAtt:
           - RestApi
           - RootResourceId
-      PathPart: "{proxy+}"
-      RestApiId: !Ref RestApi
+      PathPart: products
 
-  ProxyMethod:
+  ProductMethod:
     Type: AWS::ApiGateway::Method
     Properties:
       RestApiId: !Ref RestApi
-      ResourceId: !Ref RootResource
-      HttpMethod: ANY
-      AuthorizationType: CUSTOM
-      AuthorizerId: !Ref Authorizer
+      ResourceId: !Ref ProductsResource
+      HttpMethod: GET
+      AuthorizationType: NONE
       RequestParameters:
         method.request.path.proxy: true
       Integration:
         Type: HTTP
-        IntegrationHttpMethod: POST
-        Uri: !Sub "http://${NlbDns}/{proxy}"
+        IntegrationHttpMethod: GET
+        Uri: !Sub "http://${NlbDns}:5000/products"
         ConnectionType: VPC_LINK
         ConnectionId: !Ref VpcLink
         PassthroughBehavior: WHEN_NO_MATCH
         IntegrationResponses:
           - StatusCode: 200
-            ResponseTemplates:
-              application/json: ""
+      MethodResponses:
+        - StatusCode: 200
+  
+  VideogamesResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref RestApi
+      ParentId: !Ref ProductsResource
+      PathPart: videogames
+      
+  VideogamesMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref RestApi
+      ResourceId: !Ref VideogamesResource
+      HttpMethod: GET
+      AuthorizationType: NONE
+      RequestParameters:
+        method.request.path.proxy: true
+      Integration:
+        Type: HTTP
+        IntegrationHttpMethod: GET
+        Uri: !Sub "http://${NlbDns}:5000/products/videogames"
+        ConnectionType: VPC_LINK
+        ConnectionId: !Ref VpcLink
+        PassthroughBehavior: WHEN_NO_MATCH
+        IntegrationResponses:
+          - StatusCode: 200
       MethodResponses:
         - StatusCode: 200
 
   ApiDeployment:
     Type: AWS::ApiGateway::Deployment
-    DependsOn: ProxyMethod
+    DependsOn: 
+      - ProductMethod
+      - VideogamesMethod
     Properties:
       RestApiId: !Ref RestApi
       StageName: prod

@@ -82,3 +82,7 @@ Outputs:
   SecretArn:
     Description: ARN del secreto con credenciales
     Value: !Ref DBSecret
+
+  AuroraSg:
+    Description: Aurora Security Group ID
+    Value: !Ref AuroraSecurityGroup

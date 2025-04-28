@@ -8,6 +8,8 @@ Parameters:
     Type: AWS::EC2::Subnet::Id 
   AuroraSecurityGroupId:
     Type: AWS::EC2::SecurityGroup::Id 
+  NlbSecurityGroupId:
+    Type: AWS::EC2::SecurityGroup::Id
 
 Resources:
 
@@ -43,6 +45,10 @@ Resources:
           FromPort: 443
           ToPort: 443
           CidrIp: 10.0.0.0/16
+        - IpProtocol: tcp
+          FromPort: 5000
+          ToPort: 5000
+          SourceSecurityGroupId: !Ref NlbSecurityGroupId
       SecurityGroupEgress:
         - IpProtocol: tcp
           FromPort: 3306
@@ -113,6 +119,7 @@ Outputs:
   EC2InstanceId:
     Description: ID de la EC2 privada
     Value: !Ref BastionEC2
+    
   RoleName:
     Description: IAM Role para EC2 SSM
     Value: !Ref EC2SSMRole

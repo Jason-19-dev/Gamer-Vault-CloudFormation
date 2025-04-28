@@ -125,7 +125,7 @@ Resources:
       TaskDefinition: !Ref GamerTaskDefinition
       NetworkConfiguration:
         AwsvpcConfiguration:
-          AssignPublicIp: ENABLED
+          AssignPublicIp: DISABLED
           Subnets: !Ref PrivateSubnets
           SecurityGroups: [!Ref FargateSecurityGroupId]
       LoadBalancers:
