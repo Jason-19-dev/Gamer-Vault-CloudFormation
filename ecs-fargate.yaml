@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: ECS Fargate Service con 2 tareas (1 contenedor por AZ)
+Description: ECS Fargate Service con 1 tarea
 
 Parameters:
   VpcId:

@@ -76,7 +76,7 @@ Resources:
 
 Outputs:
   ClusterEndpoint:
-    Description: Endpoint del clúster Aurora
+    Description: Endpoint del cluster Aurora
     Value: !GetAtt AuroraCluster.Endpoint.Address
 
   SecretArn:

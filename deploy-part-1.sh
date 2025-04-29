@@ -22,6 +22,7 @@ SUBNETS=$(aws cloudformation describe-stacks --stack-name gamer-vpc --query "Sta
 FARGATE_SG=$(aws cloudformation describe-stacks --stack-name gamer-vpc --query "Stacks[0].Outputs[?OutputKey=='FargateSecurityGroupId'].OutputValue" --output text --profile $PROFILE)
 NLB_SG=$(aws cloudformation describe-stacks --stack-name gamer-vpc --query "Stacks[0].Outputs[?OutputKey=='NlbSecurityGroupId'].OutputValue" --output text --profile $PROFILE)
 PUBLIC_SUBNETS=$(aws cloudformation describe-stacks --stack-name gamer-vpc --query "Stacks[0].Outputs[?OutputKey=='PublicSubnets'].OutputValue" --output text --profile $PROFILE)
+PRIVATE_SUBNET=$(aws cloudformation describe-stacks --stack-name gamer-vpc --query "Stacks[0].Outputs[?OutputKey=='PrivateSubnet'].OutputValue" --output text --profile $PROFILE)
 
 PRIVATE_SUBNETS=$(echo $SUBNETS | tr -d ' ')
 echo "🔍 SubnetIds usados: $PRIVATE_SUBNETS"
@@ -38,8 +39,8 @@ aws cloudformation deploy \
     VpcId=$VPC_ID \
     SubnetIds=$PRIVATE_SUBNETS
 
-AURORA_SECRET_ARN=$(aws cloudformation describe-stacks --stack-name gamer-db --query "Stacks[0].Outputs[?OutputKey=='SecretArn'].OutputValue" --output text --profile $PROFILE)
-AURORA_HOST=$(aws cloudformation describe-stacks --stack-name gamer-db --query "Stacks[0].Outputs[?OutputKey=='ClusterEndpoint'].OutputValue" --output text --profile $PROFILE)
+
+AURORA_SG_ID=$(aws cloudformation describe-stacks --stack-name gamer-db --query "Stacks[0].Outputs[?OutputKey=='AuroraSg'].OutputValue" --output text --profile $PROFILE)
 
 # 3. Crear NLB
 echo "Creando stack: NLB"
@@ -54,11 +55,6 @@ aws cloudformation deploy \
     SubnetIds=$PRIVATE_SUBNETS \
     NlbSecurityGroupId=$NLB_SG
 
-TARGET_GROUP_ARN=$(aws cloudformation describe-stacks --stack-name gamer-nlb --query "Stacks[0].Outputs[?OutputKey=='TargetGroupArn'].OutputValue" --output text --profile $PROFILE)
-NLB_ARN=$(aws cloudformation describe-stacks --stack-name gamer-nlb --query "Stacks[0].Outputs[?OutputKey=='NlbArn'].OutputValue" --output text --profile $PROFILE)
-NLB_LISTENER_ARN=$(aws cloudformation describe-stacks --stack-name gamer-nlb --query "Stacks[0].Outputs[?OutputKey=='NlbListenerArn'].OutputValue" --output text --profile $PROFILE)
-NLB_DNS=$(aws cloudformation describe-stacks --stack-name gamer-nlb --query "Stacks[0].Outputs[?OutputKey=='NlbDnsName'].OutputValue" --output text --profile $PROFILE)
-
 # 4. Crear VPC Endpoints para ECR
 echo "Creando stack: VPC Endpoints para ECR"
 aws cloudformation deploy \
@@ -72,44 +68,18 @@ aws cloudformation deploy \
     SubnetIds=$PRIVATE_SUBNETS \
     FargateSecurityGroupId=$FARGATE_SG
 
-# 5. Deploy ECS Fargate
-echo "Creando stack: ECS Fargate"
+# 5. Crear stack de ec2
+echo "Creando stack: ec2"
 aws cloudformation deploy \
-  --stack-name gamer-fargate \
-  --template-file ecs-fargate.yaml \
+  --stack-name gamer-ec2 \
+  --template-file private-ec2-ssm.yaml \
   --capabilities CAPABILITY_NAMED_IAM \
   --region $REGION \
   --profile $PROFILE \
   --parameter-overrides \
     VpcId=$VPC_ID \
-    PrivateSubnets=$PRIVATE_SUBNETS \
-    TargetGroupArn=$TARGET_GROUP_ARN \
-    FargateSecurityGroupId=$FARGATE_SG \
-    ContainerImage=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/test-app:latest \
-    AuroraSecretArn=$AURORA_SECRET_ARN \
-    AuroraHost=$AURORA_HOST
-
-# 6. Lambda Authorizer
-echo "Creando stack: Lambda Authorizer"
-aws cloudformation deploy \
-  --stack-name gamer-lambda-auth\
-  --template-file lambda-authorizer.yaml \
-  --capabilities CAPABILITY_NAMED_IAM \
-  --region $REGION \
-  --profile $PROFILE
-
-LAMBDA_AUTH_ARN=$(aws cloudformation describe-stacks --stack-name gamer-lambda-auth --query "Stacks[0].Outputs[?OutputKey=='AuthorizerLambdaArn'].OutputValue" --output text --profile $PROFILE)
-
-# 7. API Gateway + VPC Link
-echo "Creando stack: API Gateway + VPC Link"
-aws cloudformation deploy \
-  --stack-name gamer-apigateway \
-  --template-file apigateway-vpclink.yaml \
-  --region $REGION \
-  --profile $PROFILE \
-  --parameter-overrides \
-    NlbDns=$NLB_DNS \
-    NlbArn=$NLB_ARN \
-    AuthorizerLambdaArn=$LAMBDA_AUTH_ARN
+    SubnetId=$PRIVATE_SUBNET \
+    AuroraSecurityGroupId=$AURORA_SG_ID \
+    NlbSecurityGroupId=$NLB_SG
 
 echo "Despliegue completado correctamente"
