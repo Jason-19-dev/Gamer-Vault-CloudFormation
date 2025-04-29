@@ -19,7 +19,7 @@ Resources:
     Properties:
       Name: gamer-vpc-link
       TargetArns:
-      - !Ref NlbArn
+        - !Ref NlbArn
 
   RestApi:
     Type: AWS::ApiGateway::RestApi
@@ -27,7 +27,7 @@ Resources:
       Name: gamer-rest-api
       EndpointConfiguration:
         Types:
-        - REGIONAL
+          - REGIONAL
 
   Authorizer:
     Type: AWS::ApiGateway::Authorizer
@@ -38,17 +38,20 @@ Resources:
       RestApiId: !Ref RestApi
       AuthorizerUri: !Sub
         - arn:aws:apigateway:${Region}:lambda:path/2015-03-31/functions/${LambdaArn}/invocations
-        - { Region: !Ref "AWS::Region", LambdaArn: !Ref AuthorizerLambdaArn }
-
+        - {
+            Region: !Ref "AWS::Region",
+            LambdaArn: !Ref AuthorizerLambdaArn
+          }
+  
   #Resource /auth
   AuthResource:
     Type: AWS::ApiGateway::Resource
     Properties:
       RestApiId: !Ref RestApi
-      ParentId:
+      ParentId: 
         Fn::GetAtt:
-        - RestApi
-        - RootResourceId
+          - RestApi
+          - RootResourceId
       PathPart: auth
 
   #Resource /auth/changepassword post
@@ -58,7 +61,7 @@ Resources:
       RestApiId: !Ref RestApi
       ParentId: !Ref AuthResource
       PathPart: changepassword
-
+  
   ChangePasswordPostMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -79,14 +82,14 @@ Resources:
         RequestParameters:
           integration.request.header.Authorization: method.request.header.Authorization
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
+              method.response.header.Access-Control-Allow-Origin: true
+  
   ChangePasswordOptionsMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -99,17 +102,17 @@ Resources:
         RequestTemplates:
           application/json: '{"statusCode": 200}'
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
 
   #Resource /auth/deactivateuser post
   DeactivateUserResource:
@@ -118,7 +121,7 @@ Resources:
       RestApiId: !Ref RestApi
       ParentId: !Ref AuthResource
       PathPart: deactivateuser
-
+  
   DeactivateUserPostMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -139,14 +142,14 @@ Resources:
         RequestParameters:
           integration.request.header.Authorization: method.request.header.Authorization
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
+              method.response.header.Access-Control-Allow-Origin: true
+  
   DeactivateUserOptionsMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -159,17 +162,17 @@ Resources:
         RequestTemplates:
           application/json: '{"statusCode": 200}'
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
 
   #Resource /auth/login post
   LoginResource:
@@ -195,14 +198,14 @@ Resources:
         ConnectionId: !Ref VpcLink
         PassthroughBehavior: WHEN_NO_MATCH
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
+              method.response.header.Access-Control-Allow-Origin: true
+  
   LoginOptionsMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -215,17 +218,17 @@ Resources:
         RequestTemplates:
           application/json: '{"statusCode": 200}'
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
 
   #Resource /auth/register post
   RegisterResource:
@@ -234,7 +237,7 @@ Resources:
       RestApiId: !Ref RestApi
       ParentId: !Ref AuthResource
       PathPart: register
-
+  
   RegisterPostMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -251,14 +254,14 @@ Resources:
         ConnectionId: !Ref VpcLink
         PassthroughBehavior: WHEN_NO_MATCH
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
+              method.response.header.Access-Control-Allow-Origin: true
+  
   RegisterOptionsMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -271,29 +274,29 @@ Resources:
         RequestTemplates:
           application/json: '{"statusCode": 200}'
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
 
   #Resource /orders post
   OrdersResource:
     Type: AWS::ApiGateway::Resource
     Properties:
       RestApiId: !Ref RestApi
-      ParentId:
+      ParentId: 
         Fn::GetAtt:
-        - RestApi
-        - RootResourceId
+          - RestApi
+          - RootResourceId
       PathPart: orders
-
+  
   OrdersPostMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -314,14 +317,14 @@ Resources:
         RequestParameters:
           integration.request.header.Authorization: method.request.header.Authorization
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
+              method.response.header.Access-Control-Allow-Origin: true
+  
   OrdersOptionsMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -334,17 +337,17 @@ Resources:
         RequestTemplates:
           application/json: '{"statusCode": 200}'
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
 
   #Resource /orders/{user_id} get
   OrdersUserResource:
@@ -353,7 +356,7 @@ Resources:
       RestApiId: !Ref RestApi
       ParentId: !Ref OrdersResource
       PathPart: '{user_id}'
-
+  
   OrdersUserGetMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -376,14 +379,14 @@ Resources:
           integration.request.path.user_id: method.request.path.user_id
           integration.request.header.Authorization: method.request.header.Authorization
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
+              method.response.header.Access-Control-Allow-Origin: true
+  
   OrdersUsersOptionsMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -396,17 +399,17 @@ Resources:
         RequestTemplates:
           application/json: '{"statusCode": 200}'
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
 
   #Resource /orders/detail
   DetailResource:
@@ -446,14 +449,14 @@ Resources:
           integration.request.path.order_id: method.request.path.order_id
           integration.request.header.Authorization: method.request.header.Authorization
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
+              method.response.header.Access-Control-Allow-Origin: true
+  
   OrdersIdOptionsMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -466,29 +469,29 @@ Resources:
         RequestTemplates:
           application/json: '{"statusCode": 200}'
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
-
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
+  
   #Resource /products
   ProductsResource:
     Type: AWS::ApiGateway::Resource
     Properties:
       RestApiId: !Ref RestApi
-      ParentId:
+      ParentId: 
         Fn::GetAtt:
-        - RestApi
-        - RootResourceId
+          - RestApi
+          - RootResourceId
       PathPart: products
-
+  
   #Resource /products/{product_id} get
   ProductIdResource:
     Type: AWS::ApiGateway::Resource
@@ -496,7 +499,7 @@ Resources:
       RestApiId: !Ref RestApi
       ParentId: !Ref ProductsResource
       PathPart: '{product_id}'
-
+  
   ProductIdGetMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -519,14 +522,14 @@ Resources:
           integration.request.path.product_id: method.request.path.product_id
           integration.request.header.Authorization: method.request.header.Authorization
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
+              method.response.header.Access-Control-Allow-Origin: true
+  
   ProductIdOptionsMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -539,17 +542,17 @@ Resources:
         RequestTemplates:
           application/json: '{"statusCode": 200}'
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
 
   #Resource /products/coins get
   CoinsResource:
@@ -558,7 +561,7 @@ Resources:
       RestApiId: !Ref RestApi
       ParentId: !Ref ProductsResource
       PathPart: coins
-
+  
   CoinsGetMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -579,15 +582,15 @@ Resources:
         RequestParameters:
           integration.request.header.Authorization: method.request.header.Authorization
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
-  CoinsOptionsMethod:
+              method.response.header.Access-Control-Allow-Origin: true
+  
+  OrdersOptionsMethod:
     Type: AWS::ApiGateway::Method
     Properties:
       RestApiId: !Ref RestApi
@@ -599,17 +602,17 @@ Resources:
         RequestTemplates:
           application/json: '{"statusCode": 200}'
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
 
   #Resource /products/coins/{videogame_name} get
   GameNameResource:
@@ -641,14 +644,14 @@ Resources:
           integration.request.path.videogame_name: method.request.path.videogame_name
           integration.request.header.Authorization: method.request.header.Authorization
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
+              method.response.header.Access-Control-Allow-Origin: true
+  
   GameNameOptionsMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -661,17 +664,17 @@ Resources:
         RequestTemplates:
           application/json: '{"statusCode": 200}'
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
 
   #Resource /products/coins/games-list get
   GamesListResource:
@@ -680,7 +683,7 @@ Resources:
       RestApiId: !Ref RestApi
       ParentId: !Ref CoinsResource
       PathPart: games-list
-
+  
   GamesListGetMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -701,14 +704,14 @@ Resources:
         RequestParameters:
           integration.request.header.Authorization: method.request.header.Authorization
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
+              method.response.header.Access-Control-Allow-Origin: true
+  
   GamesListOptionsMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -721,17 +724,17 @@ Resources:
         RequestTemplates:
           application/json: '{"statusCode": 200}'
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
 
   #Resource /products/videogames get
   VideogamesResource:
@@ -740,7 +743,7 @@ Resources:
       RestApiId: !Ref RestApi
       ParentId: !Ref ProductsResource
       PathPart: videogames
-
+      
   VideogamesGetMethod:
     Type: AWS::ApiGateway::Method
     Properties:
@@ -761,15 +764,15 @@ Resources:
         RequestParameters:
           integration.request.header.Authorization: method.request.header.Authorization
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
-  VideogamesOptionsMethod:
+              method.response.header.Access-Control-Allow-Origin: true
+  
+  GamesListOptionsMethod:
     Type: AWS::ApiGateway::Method
     Properties:
       RestApiId: !Ref RestApi
@@ -781,80 +784,28 @@ Resources:
         RequestTemplates:
           application/json: '{"statusCode": 200}'
         IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
 
   #Resource /shoppingcart post
   CartResource:
     Type: AWS::ApiGateway::Resource
     Properties:
       RestApiId: !Ref RestApi
-      ParentId:
+      ParentId: 
         Fn::GetAtt:
-        - RestApi
-        - RootResourceId
+          - RestApi
+          - RootResourceId
       PathPart: shoppingcart
-
-  CartPostMethod:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      RestApiId: !Ref RestApi
-      ResourceId: !Ref CartResource
-      HttpMethod: POST
-      AuthorizationType: NONE #Colocar CUSTOM si se va a usar la Lambda Auth
-      # AuthorizationId: !Ref Authorizer
-      RequestParameters:
-        method.request.header.Authorization: true
-      Integration:
-        Type: HTTP
-        IntegrationHttpMethod: POST
-        Uri: !Sub "http://${NlbDns}:5001/shoppingcart"
-        ConnectionType: VPC_LINK
-        ConnectionId: !Ref VpcLink
-        PassthroughBehavior: WHEN_NO_MATCH
-        RequestParameters:
-          integration.request.header.Authorization: method.request.header.Authorization
-        IntegrationResponses:
-        - StatusCode: 200
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
-  CartOptionsMethod:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      RestApiId: !Ref RestApi
-      ResourceId: !Ref CartResource
-      HttpMethod: OPTIONS
-      AuthorizationType: NONE
-      Integration:
-        Type: MOCK
-        RequestTemplates:
-          application/json: '{"statusCode": 200}'
-        IntegrationResponses:
-        - StatusCode: 200
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
   #Resource /shoppingcart/update post
 
   #Resource /users
@@ -862,83 +813,22 @@ Resources:
     Type: AWS::ApiGateway::Resource
     Properties:
       RestApiId: !Ref RestApi
-      ParentId:
+      ParentId: 
         Fn::GetAtt:
-        - RestApi
-        - RootResourceId
+          - RestApi
+          - RootResourceId
       PathPart: users
-
   #Resource /users/{user_id} get
-  UserIdResource:
-    Type: AWS::ApiGateway::Resource
-    Properties:
-      RestApiId: !Ref RestApi
-      ParentId: !Ref UsersResource
-      PathPart: '{user_id}'
-
-  UserIdGetMethod:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      RestApiId: !Ref RestApi
-      ResourceId: !Ref UserIdResource
-      HttpMethod: GET
-      AuthorizationType: NONE #Colocar CUSTOM si se va a usar la Lambda Auth
-      # AuthorizationId: !Ref Authorizer
-      RequestParameters:
-        method.request.path.user_id: true
-        method.request.header.Authorization: true
-      Integration:
-        Type: HTTP
-        IntegrationHttpMethod: GET
-        Uri: !Sub "http://${NlbDns}:5001/users/{user_id}"
-        ConnectionType: VPC_LINK
-        ConnectionId: !Ref VpcLink
-        PassthroughBehavior: WHEN_NO_MATCH
-        RequestParameters:
-          integration.request.path.user_id: method.request.path.user_id
-          integration.request.header.Authorization: method.request.header.Authorization
-        IntegrationResponses:
-        - StatusCode: 200
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
-  UserIdOptionsMethod:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      RestApiId: !Ref RestApi
-      ResourceId: !Ref UserIdResource
-      HttpMethod: OPTIONS
-      AuthorizationType: NONE
-      Integration:
-        Type: MOCK
-        RequestTemplates:
-          application/json: '{"statusCode": 200}'
-        IntegrationResponses:
-        - StatusCode: 200
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
 
   #Resource /wallet
   WalletResource:
     Type: AWS::ApiGateway::Resource
     Properties:
       RestApiId: !Ref RestApi
-      ParentId:
+      ParentId: 
         Fn::GetAtt:
-        - RestApi
-        - RootResourceId
+          - RestApi
+          - RootResourceId
       PathPart: wallet
   #Resource /wallet/{user_id} get
   WalletUserIdResource:
@@ -948,60 +838,6 @@ Resources:
       ParentId: !Ref WalletResource
       PathPart: '{user_id}'
 
-  WalletUserIdGetMethod:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      RestApiId: !Ref RestApi
-      ResourceId: !Ref WalletUserIdResource
-      HttpMethod: GET
-      AuthorizationType: NONE #Colocar CUSTOM si se va a usar la Lambda Auth
-      # AuthorizationId: !Ref Authorizer
-      RequestParameters:
-        method.request.path.user_id: true
-        method.request.header.Authorization: true
-      Integration:
-        Type: HTTP
-        IntegrationHttpMethod: GET
-        Uri: !Sub "http://${NlbDns}:5004/wallet/{user_id}"
-        ConnectionType: VPC_LINK
-        ConnectionId: !Ref VpcLink
-        PassthroughBehavior: WHEN_NO_MATCH
-        RequestParameters:
-          integration.request.path.user_id: method.request.path.user_id
-          integration.request.header.Authorization: method.request.header.Authorization
-        IntegrationResponses:
-        - StatusCode: 200
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
-  WalletUserIdOptionsMethod:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      RestApiId: !Ref RestApi
-      ResourceId: !Ref WalletUserIdResource
-      HttpMethod: OPTIONS
-      AuthorizationType: NONE
-      Integration:
-        Type: MOCK
-        RequestTemplates:
-          application/json: '{"statusCode": 200}'
-        IntegrationResponses:
-        - StatusCode: 200
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
-
   #Resource /wallet/{user_id}/add post
   WalletAddResource:
     Type: AWS::ApiGateway::Resource
@@ -1009,60 +845,6 @@ Resources:
       RestApiId: !Ref RestApi
       ParentId: !Ref WalletUserIdResource
       PathPart: add
-
-  WalletAddPostMethod:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      RestApiId: !Ref RestApi
-      ResourceId: !Ref WalletAddResource
-      HttpMethod: POST
-      AuthorizationType: NONE #Colocar CUSTOM si se va a usar la Lambda Auth
-      # AuthorizationId: !Ref Authorizer
-      RequestParameters:
-        method.request.path.product_id: true
-        method.request.header.Authorization: true
-      Integration:
-        Type: HTTP
-        IntegrationHttpMethod: POST
-        Uri: !Sub "http://${NlbDns}:5004/wallet/{user_id}/add"
-        ConnectionType: VPC_LINK
-        ConnectionId: !Ref VpcLink
-        PassthroughBehavior: WHEN_NO_MATCH
-        RequestParameters:
-          integration.request.path.product_id: method.request.path.product_id
-          integration.request.header.Authorization: method.request.header.Authorization
-        IntegrationResponses:
-        - StatusCode: 200
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
-  WalletAddOptionsMethod:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      RestApiId: !Ref RestApi
-      ResourceId: !Ref WalletAddResource
-      HttpMethod: OPTIONS
-      AuthorizationType: NONE
-      Integration:
-        Type: MOCK
-        RequestTemplates:
-          application/json: '{"statusCode": 200}'
-        IntegrationResponses:
-        - StatusCode: 200
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
 
   #Resource /wallet/{user_id}/deduct post
   WalletDeductResource:
@@ -1072,69 +854,14 @@ Resources:
       ParentId: !Ref WalletUserIdResource
       PathPart: deduct
 
-  WalletDeductPostMethod:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      RestApiId: !Ref RestApi
-      ResourceId: !Ref WalletDeductResource
-      HttpMethod: POST
-      AuthorizationType: NONE #Colocar CUSTOM si se va a usar la Lambda Auth
-      # AuthorizationId: !Ref Authorizer
-      RequestParameters:
-        method.request.path.product_id: true
-        method.request.header.Authorization: true
-      Integration:
-        Type: HTTP
-        IntegrationHttpMethod: POST
-        Uri: !Sub "http://${NlbDns}:5004/wallet/{user_id}/deduct"
-        ConnectionType: VPC_LINK
-        ConnectionId: !Ref VpcLink
-        PassthroughBehavior: WHEN_NO_MATCH
-        RequestParameters:
-          integration.request.path.product_id: method.request.path.product_id
-          integration.request.header.Authorization: method.request.header.Authorization
-        IntegrationResponses:
-        - StatusCode: 200
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Origin: true
-
-  WalletDeductOptionsMethod:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      RestApiId: !Ref RestApi
-      ResourceId: !Ref WalletDeductResource
-      HttpMethod: OPTIONS
-      AuthorizationType: NONE
-      Integration:
-        Type: MOCK
-        RequestTemplates:
-          application/json: '{"statusCode": 200}'
-        IntegrationResponses:
-        - StatusCode: 200
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
-            method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      MethodResponses:
-      - StatusCode: 200
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: true
-          method.response.header.Access-Control-Allow-Methods: true
-          method.response.header.Access-Control-Allow-Origin: true
-
   ApiDeployment:
     Type: AWS::ApiGateway::Deployment
-    DependsOn:
-    - VideogamesGetMethod
-    - VideogamesOptionsMethod
+    DependsOn: 
+      - VideogamesGetMethod
     Properties:
       RestApiId: !Ref RestApi
       StageName: prod
-
+  
   LambdaPermissionForApiGateway:
     Type: AWS::Lambda::Permission
     Properties:
