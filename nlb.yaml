@@ -27,10 +27,11 @@ Resources:
         - Key: Name
           Value: gamer-nlb
 
-  NlbTargetGroup:
+  #Auth - Listener and Target Group
+  NlbTargetGroupAuth:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: gamer-tg
+      Name: gamer-tg-auth
       Protocol: TCP
       Port: 5000
       VpcId: !Ref VpcId
@@ -43,17 +44,104 @@ Resources:
       UnhealthyThresholdCount: 5
       Tags:
         - Key: Name
-          Value: gamer-tg
+          Value: gamer-tg-auth
 
-  NlbListener:
+  NlbListenerAuth:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
       LoadBalancerArn: !Ref NetworkLoadBalancer
-      Port: 5000
+      Port: 5001
       Protocol: TCP
       DefaultActions:
         - Type: forward
-          TargetGroupArn: !Ref NlbTargetGroup
+          TargetGroupArn: !Ref NlbTargetGroupAuth
+  
+  #Order - Listener and Target Group
+  NlbTargetGroupOrder:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: gamer-tg-order
+      Protocol: TCP
+      Port: 5000
+      VpcId: !Ref VpcId
+      TargetType: ip
+      HealthCheckProtocol: TCP
+      HealthCheckPort: traffic-port
+      HealthCheckIntervalSeconds: 60
+      HealthCheckTimeoutSeconds: 20
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 5
+      Tags:
+        - Key: Name
+          Value: gamer-tg-order
+
+  NlbListenerOrder:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref NetworkLoadBalancer
+      Port: 5002
+      Protocol: TCP
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref NlbTargetGroupOrder
+  
+  #Product - Listener and Target Group
+  NlbTargetGroupProduct:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: gamer-tg-product
+      Protocol: TCP
+      Port: 5000
+      VpcId: !Ref VpcId
+      TargetType: ip
+      HealthCheckProtocol: TCP
+      HealthCheckPort: traffic-port
+      HealthCheckIntervalSeconds: 60
+      HealthCheckTimeoutSeconds: 20
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 5
+      Tags:
+        - Key: Name
+          Value: gamer-tg-product
+
+  NlbListenerProduct:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref NetworkLoadBalancer
+      Port: 5003
+      Protocol: TCP
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref NlbTargetGroupProduct
+
+  #Wallet - Listener and Target Group
+  NlbTargetGroupWallet:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: gamer-tg-wallet
+      Protocol: TCP
+      Port: 5000
+      VpcId: !Ref VpcId
+      TargetType: ip
+      HealthCheckProtocol: TCP
+      HealthCheckPort: traffic-port
+      HealthCheckIntervalSeconds: 60
+      HealthCheckTimeoutSeconds: 20
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 5
+      Tags:
+        - Key: Name
+          Value: gamer-tg-wallet
+
+  NlbListenerWallet:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref NetworkLoadBalancer
+      Port: 5004
+      Protocol: TCP
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref NlbTargetGroupWallet
 
 Outputs:
   NlbArn:
@@ -62,8 +150,17 @@ Outputs:
   NlbDnsName:
     Value: !GetAtt NetworkLoadBalancer.DNSName
 
-  TargetGroupArn:
-    Value: !Ref NlbTargetGroup
+  TargetGroupArnAuth:
+    Value: !Ref NlbTargetGroupAuth
+  
+  TargetGroupArnOrder:
+    Value: !Ref NlbTargetGroupOrder
 
-  NlbListenerArn:
-    Value: !Ref NlbListener
+  TargetGroupArnProduct:
+    Value: !Ref NlbTargetGroupProduct
+  
+  TargetGroupArnWallet:
+    Value: !Ref NlbTargetGroupWallet
+
+  # NlbListenerArnAuth:
+  #   Value: !Ref NlbListenerAuth

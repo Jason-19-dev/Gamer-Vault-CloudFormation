@@ -12,7 +12,16 @@ Parameters:
     Type: String
     Description: Imagen ECR de la app (ej. 123456789.dkr.ecr.us-east-1.amazonaws.com/demo-app:latest)
 
-  TargetGroupArn:
+  TargetGroupArnAuth:
+    Type: String
+
+  TargetGroupArnOrder:
+    Type: String
+
+  TargetGroupArnProduct:
+    Type: String
+
+  TargetGroupArnWallet:
     Type: String
 
   FargateSecurityGroupId:
@@ -95,7 +104,7 @@ Resources:
       ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
       TaskRoleArn: !GetAtt FargateTaskRole.Arn
       ContainerDefinitions:
-        - Name: apiflask-container
+        - Name: productapi-container
           Image: !Ref ContainerImage
           PortMappings:
             - ContainerPort: 5000
@@ -114,7 +123,7 @@ Resources:
               awslogs-region: !Ref AWS::Region
               awslogs-stream-prefix: gamer
 
-  # ECS Service con 2 réplicas en Fargate
+  # ECS Service con 1 réplica en Fargate
   GamerEcsService:
     Type: AWS::ECS::Service
     DependsOn: GamerEcsCluster
@@ -130,8 +139,8 @@ Resources:
           Subnets: !Ref PrivateSubnets
           SecurityGroups: [!Ref FargateSecurityGroupId]
       LoadBalancers:
-        - TargetGroupArn: !Ref TargetGroupArn
-          ContainerName: apiflask-container
+        - TargetGroupArn: !Ref TargetGroupArnProduct
+          ContainerName: productapi-container
           ContainerPort: 5000
 
 Outputs:

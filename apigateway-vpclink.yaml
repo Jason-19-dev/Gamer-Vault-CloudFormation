@@ -98,7 +98,7 @@ Resources:
       Integration:
         Type: HTTP
         IntegrationHttpMethod: GET
-        Uri: !Sub "http://${NlbDns}:5000/products"
+        Uri: !Sub "http://${NlbDns}:5003/products"
         ConnectionType: VPC_LINK
         ConnectionId: !Ref VpcLink
         PassthroughBehavior: WHEN_NO_MATCH
@@ -124,7 +124,7 @@ Resources:
       Integration:
         Type: HTTP
         IntegrationHttpMethod: GET
-        Uri: !Sub "http://${NlbDns}:5000/products/videogames"
+        Uri: !Sub "http://${NlbDns}:5003/products/videogames"
         ConnectionType: VPC_LINK
         ConnectionId: !Ref VpcLink
         PassthroughBehavior: WHEN_NO_MATCH

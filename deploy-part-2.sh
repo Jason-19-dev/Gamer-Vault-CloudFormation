@@ -16,10 +16,13 @@ PRIVATE_SUBNETS=$(echo $SUBNETS | tr -d ' ')
 AURORA_SECRET_ARN=$(aws cloudformation describe-stacks --stack-name gamer-db --query "Stacks[0].Outputs[?OutputKey=='SecretArn'].OutputValue" --output text --profile $PROFILE)
 AURORA_HOST=$(aws cloudformation describe-stacks --stack-name gamer-db --query "Stacks[0].Outputs[?OutputKey=='ClusterEndpoint'].OutputValue" --output text --profile $PROFILE)
 
-TARGET_GROUP_ARN=$(aws cloudformation describe-stacks --stack-name gamer-nlb --query "Stacks[0].Outputs[?OutputKey=='TargetGroupArn'].OutputValue" --output text --profile $PROFILE)
+TARGET_GROUP_ARN_AUTH=$(aws cloudformation describe-stacks --stack-name gamer-nlb --query "Stacks[0].Outputs[?OutputKey=='TargetGroupArnAuth'].OutputValue" --output text --profile $PROFILE)
+TARGET_GROUP_ARN_ORDER=$(aws cloudformation describe-stacks --stack-name gamer-nlb --query "Stacks[0].Outputs[?OutputKey=='TargetGroupArnOrder'].OutputValue" --output text --profile $PROFILE)
+TARGET_GROUP_ARN_PRODUCT=$(aws cloudformation describe-stacks --stack-name gamer-nlb --query "Stacks[0].Outputs[?OutputKey=='TargetGroupArnProduct'].OutputValue" --output text --profile $PROFILE)
+TARGET_GROUP_ARN_WALLET=$(aws cloudformation describe-stacks --stack-name gamer-nlb --query "Stacks[0].Outputs[?OutputKey=='TargetGroupArnWallet'].OutputValue" --output text --profile $PROFILE)
+
 NLB_DNS=$(aws cloudformation describe-stacks --stack-name gamer-nlb --query "Stacks[0].Outputs[?OutputKey=='NlbDnsName'].OutputValue" --output text --profile $PROFILE)
 NLB_ARN=$(aws cloudformation describe-stacks --stack-name gamer-nlb --query "Stacks[0].Outputs[?OutputKey=='NlbArn'].OutputValue" --output text --profile $PROFILE)
-NLB_LISTENER_ARN=$(aws cloudformation describe-stacks --stack-name gamer-nlb --query "Stacks[0].Outputs[?OutputKey=='NlbListenerArn'].OutputValue" --output text --profile $PROFILE)
 
 # 6. Deploy ECS Fargate
 echo "Creando stack: ECS Fargate"
@@ -32,7 +35,10 @@ aws cloudformation deploy \
   --parameter-overrides \
     VpcId=$VPC_ID \
     PrivateSubnets=$PRIVATE_SUBNETS \
-    TargetGroupArn=$TARGET_GROUP_ARN \
+    TargetGroupArnAuth=$TARGET_GROUP_ARN_AUTH \
+    TargetGroupArnOrder=$TARGET_GROUP_ARN_ORDER \
+    TargetGroupArnProduct=$TARGET_GROUP_ARN_PRODUCT \
+    TargetGroupArnWallet=$TARGET_GROUP_ARN_WALLET \
     FargateSecurityGroupId=$FARGATE_SG \
     ContainerImage=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/test-app:latest \
     AuroraSecretArn=$AURORA_SECRET_ARN \
