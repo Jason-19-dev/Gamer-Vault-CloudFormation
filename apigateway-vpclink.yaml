@@ -185,8 +185,7 @@ Resources:
       RestApiId: !Ref RestApi
       ResourceId: !Ref LoginResource
       HttpMethod: POST
-      AuthorizationType: NONE #Colocar CUSTOM si se va a usar la Lambda Auth
-      # AuthorizationId: !Ref Authorizer
+      AuthorizationType: NONE
       Integration:
         Type: HTTP
         IntegrationHttpMethod: POST
@@ -217,7 +216,7 @@ Resources:
         IntegrationResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+            method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
             method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
             method.response.header.Access-Control-Allow-Origin: "'*'"
       MethodResponses:
@@ -241,8 +240,7 @@ Resources:
       RestApiId: !Ref RestApi
       ResourceId: !Ref RegisterResource
       HttpMethod: POST
-      AuthorizationType: NONE #Colocar CUSTOM si se va a usar la Lambda Auth
-      # AuthorizationId: !Ref Authorizer
+      AuthorizationType: NONE
       Integration:
         Type: HTTP
         IntegrationHttpMethod: POST
@@ -273,7 +271,7 @@ Resources:
         IntegrationResponses:
         - StatusCode: 200
           ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+            method.response.header.Access-Control-Allow-Headers: "'Content-Type'"
             method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
             method.response.header.Access-Control-Allow-Origin: "'*'"
       MethodResponses:
