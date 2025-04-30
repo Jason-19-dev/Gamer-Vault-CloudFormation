@@ -1,372 +1,181 @@
--- Insertar videojuegos
-INSERT INTO
-    products (
-        product_id,
-        prod_name,
-        prod_description,
-        prod_price,
-        created_at,
-        image_url,
-        category_id
-    )
-VALUES (
-        UUID(),
-        'Cyberpunk 2077',
-        '{"genre": "RPG", "developer": "CD Projekt Red", "release_year": 2020, "platforms": ["PC", "PS5", "Xbox Series X"]}',
-        49.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/Cyberpunk_2077_box_art.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'videogame'
-        )
-    ),
-    (
-        UUID(),
-        'The Witcher 3: Wild Hunt',
-        '{"genre": "RPG", "developer": "CD Projekt Red", "release_year": 2015, "platforms": ["PC", "PS4", "Xbox One", "Switch"]}',
-        39.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/Witcher_3_cover_art.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'videogame'
-        )
-    ),
-    (
-        UUID(),
-        'Red Dead Redemption II',
-        '{"genre": "Action-Adventure", "developer": "Rockstar Games", "release_year": 2018, "platforms": ["PC", "PS4", "Xbox One"]}',
-        59.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/Red_Dead_Redemption_II.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'videogame'
-        )
-    ),
-    (
-        UUID(),
-        'Grand Theft Auto V',
-        '{"genre": "Action-Adventure", "developer": "Rockstar Games", "release_year": 2013, "platforms": ["PC", "PS5", "Xbox Series X"]}',
-        29.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/Grand_Theft_Auto_V.png',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'videogame'
-        )
-    ),
-    (
-        UUID(),
-        'Call of Duty: Modern Warfare',
-        '{"genre": "FPS", "developer": "Infinity Ward", "release_year": 2019, "platforms": ["PC", "PS4", "Xbox One"]}',
-        59.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/Call_of_Duty.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'videogame'
-        )
-    ),
-    (
-        UUID(),
-        'The Legend of Zelda: Breath of the Wild',
-        '{"genre": "Action-Adventure", "developer": "Nintendo", "release_year": 2017, "platforms": ["Switch"]}',
-        59.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/The_Legend_of_Zelda.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'videogame'
-        )
-    ),
-    (
-        UUID(),
-        'Fortnite',
-        '{"genre": "Battle Royale", "developer": "Epic Games", "release_year": 2017, "platforms": ["PC", "PS5", "Xbox Series X", "Mobile"], "free_to_play": true}',
-        0.00,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/Fortnite.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'videogame'
-        )
-    ),
-    (
-        UUID(),
-        'Minecraft',
-        '{"genre": "Sandbox", "developer": "Mojang", "release_year": 2011, "platforms": ["PC", "PS4", "Xbox One", "Switch", "Mobile"]}',
-        26.95,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/Minecraft.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'videogame'
-        )
-    ),
-    (
-        UUID(),
-        'FIFA 23',
-        '{"genre": "Sports", "developer": "EA Sports", "release_year": 2022, "platforms": ["PC", "PS5", "Xbox Series X"]}',
-        59.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/FIFA_23.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'videogame'
-        )
-    ),
-    (
-        UUID(),
-        'Apex Legends',
-        '{"genre": "Battle Royale", "developer": "Respawn Entertainment", "release_year": 2019, "platforms": ["PC", "PS5", "Xbox Series X"], "free_to_play": true}',
-        0.00,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/Apex_Legends.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'videogame'
-        )
-    );
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: gamervaultlts
+-- ------------------------------------------------------
+-- Server version	8.0.32
 
-INSERT INTO
-    products (
-        product_id,
-        prod_name,
-        prod_description,
-        prod_price,
-        created_at,
-        image_url,
-        category_id
-    )
-VALUES (
-        UUID(),
-        'Roblox',
-        '{"genre": "Sandbox", "developer": "Roblox Corporation", "release_year": 2006, "platforms": ["PC", "Xbox One", "Mobile"], "free_to_play": true}',
-        0.00,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/videogames/Roblox.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'videogame'
-        )
-    ),
-    (
-        UUID(),
-        'Valorant',
-        '{"genre": "Tactical Shooter", "developer": "Riot Games", "release_year": 2020, "platforms": ["PC"], "free_to_play": true}',
-        0.00,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/videogames/Valorant.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'videogame'
-        )
-    ),
-    (
-        UUID(),
-        'League of Legends',
-        '{"genre": "MOBA", "developer": "Riot Games", "release_year": 2009, "platforms": ["PC"], "free_to_play": true}',
-        0.00,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/videogames/League_of_Legends.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'videogame'
-        )
-    ),
-    (
-        UUID(),
-        'World of Warcraft',
-        '{"genre": "MMORPG", "developer": "Blizzard Entertainment", "release_year": 2004, "platforms": ["PC"], "free_to_play": false}',
-        19.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'videogame'
-        )
-    );
+--
+-- Table structure for table `categories`
+--
 
-/* coind */
+CREATE DATABASE gamervaultlts;
 
--- Insertar paquetes de monedas para juegos
-INSERT INTO
-    products (
-        product_id,
-        prod_name,
-        prod_description,
-        prod_price,
-        created_at,
-        image_url,
-        category_id
-    )
-VALUES (
-        UUID(),
-        'Fortnite V-Bucks 1000',
-        '{"game": "Fortnite", "currency": "V-Bucks", "platforms": ["PC", "PS5", "Xbox Series X", "Mobile"], "delivery": "instant"}',
-        9.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/Fortnite_VBucks.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'coin'
-        )
-    ),
-    (
-        UUID(),
-        'GTA Online Shark Card ($1M)',
-        '{"game": "Grand Theft Auto V", "currency": "GTA$", "platforms": ["PC", "PS5", "Xbox Series X"], "delivery": "24h"}',
-        19.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/GTA_Shark_Card.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'coin'
-        )
-    ),
-    (
-        UUID(),
-        'Apex Legends Coins 1000',
-        '{"game": "Apex Legends", "currency": "Apex Coins", "platforms": ["PC", "PS5", "Xbox Series X"], "delivery": "instant"}',
-        9.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/Apex_Coins.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'coin'
-        )
-    ),
-    (
-        UUID(),
-        'Call of Duty Points 2400',
-        '{"game": "Call of Duty", "currency": "COD Points", "platforms": ["PC", "PS5", "Xbox Series X"], "delivery": "instant"}',
-        19.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/COD_Points.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'coin'
-        )
-    ),
-    (
-        UUID(),
-        'FIFA 23 Ultimate Points 1600',
-        '{"game": "FIFA 23", "currency": "FIFA Points", "platforms": ["PC", "PS5", "Xbox Series X"], "delivery": "instant"}',
-        19.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/FIFA_Points.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'coin'
-        )
-    ),
-    (
-        UUID(),
-        'Minecraft Coins 5000',
-        '{"game": "Minecraft", "currency": "Minecoins", "platforms": ["PC", "Mobile"], "delivery": "instant"}',
-        9.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/Minecoins.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'coin'
-        )
-    ),
-    (
-        UUID(),
-        'Robux 800',
-        '{"game": "Roblox", "currency": "Robux", "platforms": ["PC", "Mobile"], "delivery": "instant"}',
-        9.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/Robux.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'coin'
-        )
-    ),
-    (
-        UUID(),
-        'Valorant Points 1000',
-        '{"game": "Valorant", "currency": "VP", "platforms": ["PC"], "delivery": "instant"}',
-        9.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/Valorant_Points.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'coin'
-        )
-    ),
-    (
-        UUID(),
-        'World of Warcraft Token',
-        '{"game": "World of Warcraft", "currency": "WoW Token", "platforms": ["PC"], "delivery": "instant", "game_time": "30 days"}',
-        19.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/WoW_Token.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'coin'
-        )
-    ),
-    (
-        UUID(),
-        'League of Legends RP 1380',
-        '{"game": "League of Legends", "currency": "Riot Points", "platforms": ["PC"], "delivery": "instant"}',
-        9.99,
-        CURRENT_TIMESTAMP,
-        'https://d1th0hc7ymkxpv.cloudfront.net/LoL_RP.jpg',
-        (
-            SELECT category_id
-            FROM categories
-            WHERE
-                name = 'coin'
-        )
-    );
+USE gamervaultlts;
+
+DROP TABLE IF EXISTS `categories`;
+
+CREATE TABLE `categories` (
+  `category_id` varchar(50) NOT NULL DEFAULT (uuid()),
+  `name` varchar(50) NOT NULL,
+  `description` json DEFAULT NULL,
+  PRIMARY KEY (`category_id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` VALUES ('db0aaa38-1351-11f0-b8a1-0e1f5b06a03f','videogame','[\"Free Fire\", \"Call of Duty\", \"Clash Royale\"]'),('db0aaed7-1351-11f0-b8a1-0e1f5b06a03f','coins','[\"Free Fire Coins\", \"COD Points\", \"Clash Royale Gems\"]');
+
+--
+-- Table structure for table `challenge_levels`
+--
+
+DROP TABLE IF EXISTS `challenge_levels`;
+
+CREATE TABLE `challenge_levels` (
+  `level_id` int NOT NULL,
+  `level_name` varchar(50) NOT NULL,
+  `min_transactions` int NOT NULL,
+  `annual_interest` decimal(5,3) NOT NULL,
+  PRIMARY KEY (`level_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `challenge_levels`
+--
+
+INSERT INTO `challenge_levels` VALUES (1,'Bronce',3,0.040),(2,'Oro',5,0.060),(3,'Diamante',10,0.080);
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+
+CREATE TABLE `orders` (
+  `order_id` varchar(50) NOT NULL DEFAULT (uuid()),
+  `user_id` varchar(50) NOT NULL,
+  `total` decimal(10,2) NOT NULL,
+  `savings` decimal(10,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` enum('pending','completed','cancelled') DEFAULT 'pending',
+  `description` json DEFAULT NULL,
+  `payment_method` varchar(50) NOT NULL,
+  PRIMARY KEY (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+
+INSERT INTO `orders` VALUES ('00eaf6bb-f054-44fe-b426-9c934785a874','2c0967c1-119b-11f0-95ba-0e1f5b06a03f',60.00,0.01,'2025-04-29 19:43:07','pending','[{\"id\": \"ab140504-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Legend of Zelda: Breath of the Wild\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\"}]',''),('021f67c0-485a-4a44-a691-58b9150af3f7','2c096699-119b-11f0-95ba-0e1f5b06a03f',0.00,0.00,'2025-04-29 18:51:56','pending','\"[]\"',''),('0ad02837-c548-483e-b223-65521d839f20','22480e7a-4755-46b0-9cfb-983d2a56c348',87.00,0.06,'2025-04-27 19:57:45','pending','[{\"id\": \"ab1412a2-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"FIFA 23\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/fifa23.jpg\"}, {\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}]',''),('0bb00cc1-ccae-479f-80fc-11f8c7f23d56','2c095f28-119b-11f0-95ba-0e1f5b06a03f',40.00,0.01,'2025-04-29 14:36:56','pending','[{\"id\": \"ab13f5ca-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Witcher 3: Wild Hunt\", \"price\": 39.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Witcher_3_cover_art.jpg\"}]',''),('0c9eae88-6ead-49fd-a525-6a5aad103085','2c0967c1-119b-11f0-95ba-0e1f5b06a03f',200.00,0.10,'2025-04-29 20:08:04','completed','[{\"name\": \"Roblox\", \"price\": \"0.00\", \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Roblox.jpg\", \"created_at\": \"Thu, 17 Apr 2025 04:37:12 GMT\", \"product_id\": \"a13a5554-1b45-11f0-ab33-0e1f5b06a03f\", \"description\": {\"genre\": \"Sandbox\", \"developer\": \"Roblox Corporation\", \"platforms\": [\"PC\", \"Xbox One\", \"Mobile\"], \"free_to_play\": true, \"release_year\": 2006}, \"id_category\": \"db0aaa38-1351-11f0-b8a1-0e1f5b06a03f\", \"category_name\": \"videogame\"}, {\"name\": \"Valorant\", \"price\": \"0.00\", \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Valorant.webp\", \"product_id\": \"a13ad7d4-1b45-11f0-ab33-0e1f5b06a03f\", \"id_category\": \"db0aaa38-1351-11f0-b8a1-0e1f5b06a03f\"}]',''),('0d56a0fc-b5b9-4b1b-8a2c-73ad88e7cdaf','2c096491-119b-11f0-95ba-0e1f5b06a03f',60.00,0.01,'2025-04-29 20:17:03','pending','[{\"id\": \"ab140504-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Legend of Zelda: Breath of the Wild\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\"}]',''),('10a9e334-bf11-43cd-a810-6d41db4c3d83','749c3383-9780-4a57-b36c-bd8b65b9eaac',150.00,0.04,'2025-04-30 14:16:57','pending','[{\"id\": \"ab13f5ca-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Witcher 3: Wild Hunt\", \"price\": 39.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Witcher_3_cover_art.jpg\"}, {\"id\": \"ab13fc1a-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Grand Theft Auto V\", \"price\": 29.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Grand_Theft_Auto_V.png\"}, {\"id\": \"a13ae121-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"World of Warcraft\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg\"}, {\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}]',''),('1214558f-11e9-4672-be41-a156a9e6d695','0ab1f74f-2504-49e1-a16e-710e459166c1',0.00,0.01,'2025-04-29 18:14:47','pending','[{\"id\": \"ab13f5ca-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Witcher 3: Wild Hunt\", \"price\": 39.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Witcher_3_cover_art.jpg\"}]',''),('1437356d-4f50-4037-8fb4-3ef6ca3b6418','2c095f28-119b-11f0-95ba-0e1f5b06a03f',20.00,0.01,'2025-04-28 19:49:57','pending','[{\"id\": \"a13ae121-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"World of Warcraft\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg\"}]',''),('148a8193-67e6-4a40-b9a1-6242b321d25e','2c095f28-119b-11f0-95ba-0e1f5b06a03f',20.00,0.01,'2025-04-28 16:13:09','pending','[{\"id\": \"a13ae121-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"World of Warcraft\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg\"}]',''),('15f1c349-6d50-4678-998e-cdb8f6e753d1','2c0967c1-119b-11f0-95ba-0e1f5b06a03f',0.00,0.00,'2025-04-29 19:23:15','pending','[]',''),('1da9092d-fda7-4514-92db-77221aab4903','2c096699-119b-11f0-95ba-0e1f5b06a03f',0.00,0.00,'2025-04-22 18:43:24','pending','[{\"id\": \"a13ad7d4-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"Valorant\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Valorant.webp\"}]',''),('21eeef91-208c-4c21-b0e1-ba08421caf9f','2c095f28-119b-11f0-95ba-0e1f5b06a03f',60.00,0.01,'2025-04-29 17:51:40','pending','[{\"id\": \"a13a5554-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"Roblox\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Roblox.jpg\"}, {\"id\": \"ab13fe56-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Call of Duty: Modern Warfare\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Call_of_Duty.jpg\"}]',''),('2249dc0e-33ad-4b31-8aea-233fb6f9fb1d','2c096491-119b-11f0-95ba-0e1f5b06a03f',20.00,0.01,'2025-04-28 16:32:03','pending','[{\"id\": \"a13ae121-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"World of Warcraft\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg\"}]',''),('2683640a-7228-45c9-9635-b79d64f0549f','2c095f28-119b-11f0-95ba-0e1f5b06a03f',27.00,0.05,'2025-04-29 18:19:54','pending','[{\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}]',''),('2a64d617-04f7-4fd0-a22f-227ec6675177','2c096699-119b-11f0-95ba-0e1f5b06a03f',0.00,0.00,'2025-04-29 19:00:48','pending','\"[]\"',''),('2b0832d5-e778-4818-a69b-606a5c60842e','2c096491-119b-11f0-95ba-0e1f5b06a03f',50.00,0.01,'2025-04-29 20:26:41','pending','[{\"id\": \"ab13eab4-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Cyberpunk 2077\", \"price\": 49.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Cyberpunk_2077_box_art.jpg\"}]',''),('2d8306b1-7e4f-4dae-8054-d6b4dd80ea1e','2c095f28-119b-11f0-95ba-0e1f5b06a03f',50.00,0.01,'2025-04-23 13:58:34','pending','[{\"id\": \"ab13eab4-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Cyberpunk 2077\", \"price\": 49.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Cyberpunk_2077_box_art.jpg\"}]',''),('2dbea360-897a-4684-b970-b24407f5f75e','2c096491-119b-11f0-95ba-0e1f5b06a03f',49.98,0.01,'2025-04-29 20:03:22','pending','[{\"id\": \"ab13eab4-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Cyberpunk 2077\", \"price\": 49.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Cyberpunk_2077_box_art.jpg\"}]',''),('2fe3917b-3f45-4eb5-aae4-b2e780c5c1a0','2c096491-119b-11f0-95ba-0e1f5b06a03f',89.99,0.02,'2025-04-29 20:00:02','pending','[{\"id\": \"ab140504-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Legend of Zelda: Breath of the Wild\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\"}, {\"id\": \"ab13fc1a-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Grand Theft Auto V\", \"price\": 29.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Grand_Theft_Auto_V.png\"}]',''),('30eb6e20-92ae-4289-92be-2863a43a1b02','2c096491-119b-11f0-95ba-0e1f5b06a03f',20.00,0.01,'2025-04-28 16:40:24','pending','[{\"id\": \"a13ae121-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"World of Warcraft\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg\"}]',''),('356f956b-489f-4e17-a720-59f2d6f6bd91','2c096491-119b-11f0-95ba-0e1f5b06a03f',59.99,0.01,'2025-04-29 19:52:01','pending','[{\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}]',''),('38409ad0-b00f-418d-86ac-475d11034a9c','2c096491-119b-11f0-95ba-0e1f5b06a03f',20.00,0.01,'2025-04-28 16:28:29','pending','[{\"id\": \"a13ae121-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"World of Warcraft\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg\"}]',''),('397a0ede-ea1e-4dd6-8353-8ef4ead54e58','2c095f28-119b-11f0-95ba-0e1f5b06a03f',60.00,0.02,'2025-04-22 18:32:49','pending','[{\"id\": \"ab13f5ca-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Witcher 3: Wild Hunt\", \"price\": 39.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Witcher_3_cover_art.jpg\"}, {\"id\": \"a13a5554-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"Roblox\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Roblox.jpg\"}, {\"id\": \"a13ae121-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"World of Warcraft\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg\"}]',''),('3ca23c94-c52b-47c9-a8b8-76dc2fec361f','2c096491-119b-11f0-95ba-0e1f5b06a03f',39.94,0.01,'2025-04-29 19:36:35','pending','[{\"id\": \"ab13f5ca-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Witcher 3: Wild Hunt\", \"price\": 39.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Witcher_3_cover_art.jpg\"}]',''),('3cf30c7c-a11c-469c-9e79-3a23b2f6bdb6','2c096491-119b-11f0-95ba-0e1f5b06a03f',50.00,0.01,'2025-04-28 16:36:13','pending','[{\"id\": \"ab13eab4-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Cyberpunk 2077\", \"price\": 49.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Cyberpunk_2077_box_art.jpg\"}]',''),('402600d5-251d-471b-adb7-d93e1e03e120','2c095f28-119b-11f0-95ba-0e1f5b06a03f',63.85,0.02,'2025-04-28 20:01:23','pending','[{\"id\": \"a13ae121-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"World of Warcraft\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg\"}, {\"id\": \"ab140504-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Legend of Zelda: Breath of the Wild\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\"}]',''),('4410e06f-c59d-450c-9543-51540666da11','2c095f28-119b-11f0-95ba-0e1f5b06a03f',50.00,0.01,'2025-04-29 14:39:48','pending','[{\"id\": \"ab13eab4-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Cyberpunk 2077\", \"price\": 49.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Cyberpunk_2077_box_art.jpg\"}]',''),('4702e759-aa07-47bc-a50c-17b55ad9c663','2c095f28-119b-11f0-95ba-0e1f5b06a03f',40.00,0.01,'2025-04-28 15:51:56','pending','[{\"id\": \"ab13f5ca-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Witcher 3: Wild Hunt\", \"price\": 39.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Witcher_3_cover_art.jpg\"}]',''),('48348801-ba95-4203-a2ad-3bd1352af992','2c096491-119b-11f0-95ba-0e1f5b06a03f',0.00,0.00,'2025-04-29 17:55:25','pending','[{\"id\": \"ab141480-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Apex Legends\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/apex.jpg\"}]',''),('48e04690-46e7-48fc-bd8f-21520427db7f','2c095f28-119b-11f0-95ba-0e1f5b06a03f',60.00,0.01,'2025-04-29 18:14:29','pending','[{\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}]',''),('49c39d3d-a0ad-460f-a583-b513e46a957a','2c0967c1-119b-11f0-95ba-0e1f5b06a03f',0.00,0.00,'2025-04-29 19:18:16','pending','[]',''),('4c63845b-49fa-49f2-9200-dba26e28649b','2c0967c1-119b-11f0-95ba-0e1f5b06a03f',0.00,0.00,'2025-04-29 19:19:33','pending','[]',''),('531263ed-152b-43c5-8dfc-680c845f4cfa','22480e7a-4755-46b0-9cfb-983d2a56c348',0.00,0.00,'2025-04-27 19:39:48','pending','[]',''),('548e06de-39f0-4aaa-a647-2cec31f242c8','2c0967c1-119b-11f0-95ba-0e1f5b06a03f',90.00,0.02,'2025-04-22 18:26:34','pending','[{\"id\": \"ab140504-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Legend of Zelda: Breath of the Wild\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\"}, {\"id\": \"ab13fc1a-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Grand Theft Auto V\", \"price\": 29.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Grand_Theft_Auto_V.png\"}]',''),('5a62e0dc-b35b-4007-8d11-beecfbc2b21d','2c095f28-119b-11f0-95ba-0e1f5b06a03f',30.00,0.01,'2025-04-28 15:12:45','pending','[{\"id\": \"ab13fc1a-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Grand Theft Auto V\", \"price\": 29.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Grand_Theft_Auto_V.png\"}]',''),('5bce6f0d-cd2d-43ba-9012-eb0d8d9dae6b','2c096491-119b-11f0-95ba-0e1f5b06a03f',119.77,0.02,'2025-04-29 17:39:02','pending','[{\"id\": \"ab140504-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Legend of Zelda: Breath of the Wild\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\"}, {\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}, {\"id\": \"a13a5554-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"Roblox\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Roblox.jpg\"}, {\"id\": \"ab141480-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Apex Legends\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/apex.jpg\"}]',''),('5f010fa0-41d8-4eed-a5ae-69c9bf10c658','2c095f28-119b-11f0-95ba-0e1f5b06a03f',60.00,0.01,'2025-04-27 19:42:09','pending','[{\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}]',''),('5fdcd106-dc9c-42b4-8043-a2798438bb45','2c096491-119b-11f0-95ba-0e1f5b06a03f',20.00,0.01,'2025-04-29 19:15:23','pending','[{\"id\": \"a13ae121-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"World of Warcraft\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg\"}]',''),('60df66a5-4465-4b1b-9db9-d008e99455be','2c095f28-119b-11f0-95ba-0e1f5b06a03f',43.86,0.01,'2025-04-28 19:50:54','pending','[{\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}]',''),('64b82490-295e-4c81-8dd5-bc4429dd1ac4','22480e7a-4755-46b0-9cfb-983d2a56c348',0.00,0.00,'2025-04-27 19:43:46','pending','[]',''),('670508a8-fa8c-4325-a540-970ff44182a8','2c095f28-119b-11f0-95ba-0e1f5b06a03f',27.00,0.05,'2025-04-28 16:00:49','pending','[{\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}]',''),('682bade9-48fa-4a93-9522-704bac0bbe30','2c096491-119b-11f0-95ba-0e1f5b06a03f',26.95,0.05,'2025-04-29 20:43:35','pending','[{\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}]',''),('6c076451-cf27-4743-98d9-5de5939ca6ab','2c096491-119b-11f0-95ba-0e1f5b06a03f',27.00,0.05,'2025-04-29 20:37:01','pending','[{\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}]',''),('70e66a49-4c1a-47a7-8e61-d0113ec6314d','7447f1c4-2d7d-4703-86f1-0edc7bf40be5',60.00,0.01,'2025-04-23 14:01:08','pending','[{\"id\": \"ab1412a2-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"FIFA 23\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/fifa23.jpg\"}]',''),('77134179-6a60-49ea-9849-269b958f0055','2c096491-119b-11f0-95ba-0e1f5b06a03f',59.99,0.01,'2025-04-29 19:55:30','pending','[{\"id\": \"ab13fe56-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Call of Duty: Modern Warfare\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Call_of_Duty.jpg\"}]',''),('78ac57d7-33bc-4391-85d0-55fd88251bde','2c096699-119b-11f0-95ba-0e1f5b06a03f',150.00,0.03,'2025-04-22 18:28:56','completed','[{\"id\": \"ab13fc1a-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Grand Theft Auto V\", \"price\": 29.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Grand_Theft_Auto_V.png\"}, {\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}, {\"id\": \"ab1412a2-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"FIFA 23\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/fifa23.jpg\"}]',''),('79ce746a-aa86-4f26-9f34-09722dd7e454','2c096491-119b-11f0-95ba-0e1f5b06a03f',117.00,0.07,'2025-04-29 15:35:38','pending','[{\"id\": \"ab13fc1a-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Grand Theft Auto V\", \"price\": 29.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Grand_Theft_Auto_V.png\"}, {\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}, {\"id\": \"ab1412a2-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"FIFA 23\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/fifa23.jpg\"}]',''),('7ae1d7b5-ce1a-49a9-a77f-25a64cb5253f','2c095f28-119b-11f0-95ba-0e1f5b06a03f',0.00,0.00,'2025-04-28 14:58:34','pending','[]',''),('7c5cb9e1-2882-4c6e-a1c6-3e7442848b80','2c096491-119b-11f0-95ba-0e1f5b06a03f',27.00,0.05,'2025-04-29 21:21:27','pending','\"[{\\\"id\\\":\\\"ab141062-1352-11f0-b8a1-0e1f5b06a03f\\\",\\\"image_url\\\":\\\"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\\\",\\\"name\\\":\\\"Minecraft\\\",\\\"price\\\":26.95,\\\"quantity\\\":1}]\"',''),('86117c14-7161-4a79-a4d1-f864ed53af60','2c096491-119b-11f0-95ba-0e1f5b06a03f',87.00,0.06,'2025-04-29 21:12:31','pending','\"[{\\\"id\\\":\\\"ab140504-1352-11f0-b8a1-0e1f5b06a03f\\\",\\\"image_url\\\":\\\"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\\\",\\\"name\\\":\\\"The Legend of Zelda: Breath of the Wild\\\",\\\"price\\\":59.99,\\\"quantity\\\":1},{\\\"id\\\":\\\"ab141062-1352-11f0-b8a1-0e1f5b06a03f\\\",\\\"image_url\\\":\\\"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\\\",\\\"name\\\":\\\"Minecraft\\\",\\\"price\\\":26.95,\\\"quantity\\\":1}]\"',''),('867755a7-5e61-483b-853d-8ba070aebb36','2c096491-119b-11f0-95ba-0e1f5b06a03f',60.00,0.01,'2025-04-29 20:09:54','pending','[{\"id\": \"ab13fe56-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Call of Duty: Modern Warfare\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Call_of_Duty.jpg\"}]',''),('867962be-a26d-4675-aa5b-3beda1500f29','2c0967c1-119b-11f0-95ba-0e1f5b06a03f',70.00,0.03,'2025-04-22 19:44:00','pending','[{\"id\": \"a13adee5-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"League of Legends\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/League_of_Legends.jpeg\"}, {\"id\": \"aefef6cd-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Apex Legends Coins 1000\", \"price\": 9.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/coins/apex-coin.png\"}, {\"id\": \"ab13f5ca-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Witcher 3: Wild Hunt\", \"price\": 39.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Witcher_3_cover_art.jpg\"}, {\"id\": \"a13ae121-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"World of Warcraft\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg\"}]',''),('8c7e427a-faea-4054-b84b-ae2745f3298e','2c096491-119b-11f0-95ba-0e1f5b06a03f',90.00,0.02,'2025-04-28 17:46:29','pending','[{\"id\": \"ab13fe56-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Call of Duty: Modern Warfare\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Call_of_Duty.jpg\"}, {\"id\": \"ab13fc1a-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Grand Theft Auto V\", \"price\": 29.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Grand_Theft_Auto_V.png\"}, {\"id\": \"a13a5554-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"Roblox\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Roblox.jpg\"}]',''),('9ca5bcde-cfcc-4269-9042-2bc9b10f7401','2c096699-119b-11f0-95ba-0e1f5b06a03f',30.00,0.01,'2025-04-22 18:42:19','pending','[{\"id\": \"ab13fc1a-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Grand Theft Auto V\", \"price\": 29.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Grand_Theft_Auto_V.png\"}]',''),('9ee9cf44-2904-402c-9f23-70278299109e','2c096491-119b-11f0-95ba-0e1f5b06a03f',87.00,0.06,'2025-04-28 16:26:08','pending','[{\"id\": \"ab1412a2-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"FIFA 23\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/fifa23.jpg\"}, {\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}]',''),('a45c636e-e01e-4ded-b7bd-710e157aa659','2c095f28-119b-11f0-95ba-0e1f5b06a03f',60.00,0.01,'2025-04-28 15:53:20','pending','[{\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}]',''),('a6f1b296-bb09-468b-99b2-4b01b18a426f','2c0967c1-119b-11f0-95ba-0e1f5b06a03f',60.00,0.01,'2025-04-30 06:21:57','pending','[{\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}]',''),('a7b9d432-c1ef-4344-b7aa-e3830e480f79','2c095f28-119b-11f0-95ba-0e1f5b06a03f',60.00,0.01,'2025-04-28 16:18:21','pending','[{\"id\": \"ab1412a2-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"FIFA 23\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/fifa23.jpg\"}]',''),('af6adde2-3dd4-4df1-98d7-96c2ed6e0e76','2c095f28-119b-11f0-95ba-0e1f5b06a03f',60.00,0.01,'2025-04-28 16:06:10','pending','[{\"id\": \"ab140504-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Legend of Zelda: Breath of the Wild\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\"}]',''),('b0d688a3-405c-4d63-a17a-78b2cc847229','2c095f28-119b-11f0-95ba-0e1f5b06a03f',59.99,0.01,'2025-04-29 14:46:15','pending','[{\"id\": \"a13a5554-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"Roblox\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Roblox.jpg\"}, {\"id\": \"ab13fe56-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Call of Duty: Modern Warfare\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Call_of_Duty.jpg\"}]',''),('b49cf786-eb97-482a-80e6-462011b966eb','2c0967c1-119b-11f0-95ba-0e1f5b06a03f',30.00,0.01,'2025-04-30 13:27:07','pending','[{\"id\": \"ab13fc1a-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Grand Theft Auto V\", \"price\": 29.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Grand_Theft_Auto_V.png\"}]',''),('b5e5b531-f575-4096-9233-c3c44ee6416e','2c096491-119b-11f0-95ba-0e1f5b06a03f',30.00,0.01,'2025-04-29 19:51:35','pending','[{\"id\": \"ab13fc1a-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Grand Theft Auto V\", \"price\": 29.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Grand_Theft_Auto_V.png\"}]',''),('b9474539-be3d-4b48-b722-8c56384dd132','7447f1c4-2d7d-4703-86f1-0edc7bf40be5',20.00,0.01,'2025-04-23 14:28:05','pending','[{\"id\": \"a13ae121-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"World of Warcraft\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg\"}]',''),('be33b897-c8f8-4329-85b6-1ae6c331cd77','2c095f28-119b-11f0-95ba-0e1f5b06a03f',0.00,0.01,'2025-04-30 13:02:49','pending','[{\"id\": \"ab141480-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Apex Legends\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/apex.jpg\"}, {\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}]',''),('bef3591e-10c7-4a79-8a3a-633d171d66cb','2c0967c1-119b-11f0-95ba-0e1f5b06a03f',137.00,0.09,'2025-04-27 20:13:14','pending','[{\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}, {\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}, {\"id\": \"aefef479-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"GTA Online Shark Card ($1M)\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/coins/GTA_Shark_Card.jpg\"}, {\"id\": \"aefef86e-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Call of Duty Points 2400\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/coins/cod.webp\"}, {\"id\": \"aeff0c29-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"League of Legends RP 1380\", \"price\": 9.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/coins/LoL_RP.png\"}]',''),('c022eaa5-e22b-4d6f-bacb-2b23de423883','2c095f28-119b-11f0-95ba-0e1f5b06a03f',27.00,0.05,'2025-04-29 14:39:14','pending','[{\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}]',''),('c1384cac-390c-4f75-8d1f-9459bde40c18','749c3383-9780-4a57-b36c-bd8b65b9eaac',27.00,0.05,'2025-04-30 14:20:57','pending','[{\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}]',''),('c171d768-075c-4c49-9e48-a3f61882fde9','2c096491-119b-11f0-95ba-0e1f5b06a03f',0.00,0.00,'2025-04-29 19:50:09','pending','[]',''),('c1856171-2d6a-4365-ae4c-a42176c6568b','2c095f28-119b-11f0-95ba-0e1f5b06a03f',120.00,0.02,'2025-04-28 15:50:41','pending','[{\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}, {\"id\": \"ab140504-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Legend of Zelda: Breath of the Wild\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\"}]',''),('cd17a9ac-332c-4bce-96aa-18b968d3dd70','2c096491-119b-11f0-95ba-0e1f5b06a03f',160.00,0.03,'2025-04-29 16:03:13','pending','[{\"id\": \"ab13f5ca-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Witcher 3: Wild Hunt\", \"price\": 39.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Witcher_3_cover_art.jpg\"}, {\"id\": \"ab141480-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Apex Legends\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/apex.jpg\"}, {\"id\": \"a13ad7d4-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"Valorant\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Valorant.webp\"}, {\"id\": \"a13a5554-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"Roblox\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Roblox.jpg\"}, {\"id\": \"ab140504-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Legend of Zelda: Breath of the Wild\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\"}, {\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}]',''),('d13b2c1f-f9fa-405b-b33c-23fa5856d1ab','2c096491-119b-11f0-95ba-0e1f5b06a03f',60.00,0.01,'2025-04-28 16:39:18','pending','[{\"id\": \"ab140504-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Legend of Zelda: Breath of the Wild\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\"}]',''),('d1837cf5-0f4e-4911-a2a8-9f305c38c38c','2c095f28-119b-11f0-95ba-0e1f5b06a03f',0.00,0.05,'2025-04-29 19:08:56','pending','[{\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}]',''),('d5852aef-9143-4d3b-a1d9-894622fc6988','2c096491-119b-11f0-95ba-0e1f5b06a03f',60.00,0.01,'2025-04-29 20:31:13','pending','[{\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}]',''),('d67d5969-fd2e-445d-aafc-68dedb13b06d','2c096699-119b-11f0-95ba-0e1f5b06a03f',30.00,0.01,'2025-04-22 18:16:13','pending','[{\"id\": \"ab13fc1a-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Grand Theft Auto V\", \"price\": 29.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Grand_Theft_Auto_V.png\"}]',''),('d8caa092-b129-43de-8f3f-4124d80cc803','2c096491-119b-11f0-95ba-0e1f5b06a03f',26.99,0.05,'2025-04-29 19:38:31','pending','[{\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}]',''),('dad2c5ff-ab17-4313-9c49-90d135df43f0','2c096491-119b-11f0-95ba-0e1f5b06a03f',60.00,0.01,'2025-04-29 20:33:14','pending','[{\"id\": \"ab140504-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Legend of Zelda: Breath of the Wild\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\"}]',''),('dc0be19c-55a8-4763-80cc-49c1690eb368','2c0967c1-119b-11f0-95ba-0e1f5b06a03f',297.00,0.14,'2025-04-27 20:47:25','completed','[{\"id\": \"aefeed4d-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Fortnite V-Bucks 1000\", \"price\": 9.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/coins/Fortnite_VBucks.webp\"}, {\"id\": \"aefef479-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"GTA Online Shark Card ($1M)\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/coins/GTA_Shark_Card.jpg\"}, {\"id\": \"aefefa85-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"FIFA 23 Ultimate Points 1600\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/coins/fifapoints.jpg\"}, {\"id\": \"aeff0819-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Valorant Points 1000\", \"price\": 9.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/coins/Valorant_Points.webp\"}, {\"id\": \"ab13f5ca-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Witcher 3: Wild Hunt\", \"price\": 39.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Witcher_3_cover_art.jpg\"}, {\"id\": \"ab140504-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Legend of Zelda: Breath of the Wild\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\"}, {\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}, {\"id\": \"a13ae121-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"World of Warcraft\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg\"}, {\"id\": \"ab1412a2-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"FIFA 23\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/fifa23.jpg\"}, {\"id\": \"ab13fc1a-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Grand Theft Auto V\", \"price\": 29.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Grand_Theft_Auto_V.png\"}]',''),('dcdcaaac-2c83-477a-a83c-f35c95a865fb','2c095f28-119b-11f0-95ba-0e1f5b06a03f',0.00,0.00,'2025-04-28 16:19:56','pending','[{\"id\": \"ab140d63-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Fortnite\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/fortnite.jpg\"}]',''),('dd2fc148-7c90-4a55-b8f8-c20bf5f1a53e','2c095f28-119b-11f0-95ba-0e1f5b06a03f',0.00,0.00,'2025-04-29 14:38:23','pending','[]',''),('df87dc51-d31e-467b-84db-0b7b2870d9c6','2c095f28-119b-11f0-95ba-0e1f5b06a03f',59.93,0.01,'2025-04-29 14:40:22','pending','[{\"id\": \"ab1412a2-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"FIFA 23\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/fifa23.jpg\"}]',''),('e0a5d0dd-4fc1-4dbb-8cff-faa38a446469','2c095f28-119b-11f0-95ba-0e1f5b06a03f',20.00,0.01,'2025-04-28 15:07:19','pending','[{\"id\": \"a13ae121-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"World of Warcraft\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg\"}]',''),('ef425d1b-d1e3-4b07-afc4-be7cd08d8446','2c096699-119b-11f0-95ba-0e1f5b06a03f',0.00,0.00,'2025-04-29 18:46:00','pending','\"[]\"',''),('f02fcbe8-52f3-4937-8b77-d9959f43d318','2c0967c1-119b-11f0-95ba-0e1f5b06a03f',90.00,0.02,'2025-04-22 18:28:51','pending','[{\"id\": \"ab140504-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Legend of Zelda: Breath of the Wild\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\"}, {\"id\": \"ab13fc1a-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Grand Theft Auto V\", \"price\": 29.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Grand_Theft_Auto_V.png\"}]',''),('f0fe024f-5b9b-4522-96df-7d7a36c06bf5','2c096491-119b-11f0-95ba-0e1f5b06a03f',27.00,0.05,'2025-04-29 19:11:58','pending','[{\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}]',''),('f892c688-455d-42e8-83b4-34b8e3b232ba','749c3383-9780-4a57-b36c-bd8b65b9eaac',27.00,0.05,'2025-04-30 14:20:58','pending','[{\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}]',''),('f9b9201a-4a54-4b24-8020-8e2816d12f0e','7447f1c4-2d7d-4703-86f1-0edc7bf40be5',0.00,0.00,'2025-04-23 14:27:35','pending','[{\"id\": \"a13ad7d4-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"Valorant\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Valorant.webp\"}]',''),('fc25fb2c-6ac9-4a48-9c00-17e70bbe8ec0','2c096699-119b-11f0-95ba-0e1f5b06a03f',40.00,0.01,'2025-04-22 18:40:24','pending','[{\"id\": \"ab13f5ca-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Witcher 3: Wild Hunt\", \"price\": 39.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Witcher_3_cover_art.jpg\"}]',''),('fe2f7fcd-ff07-416d-9e96-c339abe8f3c6','2c096491-119b-11f0-95ba-0e1f5b06a03f',120.00,0.02,'2025-04-29 21:01:14','pending','\"[{\\\"id\\\":\\\"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\\\",\\\"image_url\\\":\\\"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\\\",\\\"name\\\":\\\"Red Dead Redemption II\\\",\\\"price\\\":59.99,\\\"quantity\\\":1},{\\\"id\\\":\\\"ab13fe56-1352-11f0-b8a1-0e1f5b06a03f\\\",\\\"image_url\\\":\\\"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Call_of_Duty.jpg\\\",\\\"name\\\":\\\"Call of Duty: Modern Warfare\\\",\\\"price\\\":59.99,\\\"quantity\\\":1}]\"',''),('ff766dcf-28be-4331-a141-5f9bfe9ef0c8','2c096699-119b-11f0-95ba-0e1f5b06a03f',0.00,0.00,'2025-04-29 18:24:43','pending','\"[]\"','');
+
+
+--
+-- Table structure for table `products`
+--
+
+DROP TABLE IF EXISTS `products`;
+
+CREATE TABLE `products` (
+  `product_id` varchar(50) NOT NULL DEFAULT (uuid()),
+  `prod_name` varchar(50) NOT NULL,
+  `prod_description` json DEFAULT NULL,
+  `prod_price` decimal(10,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `image_url` varchar(255) DEFAULT NULL,
+  `category_id` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+--
+-- Dumping data for table `products`
+--
+
+
+INSERT INTO `products` VALUES ('a13a5554-1b45-11f0-ab33-0e1f5b06a03f','Roblox','{\"genre\": \"Sandbox\", \"developer\": \"Roblox Corporation\", \"platforms\": [\"PC\", \"Xbox One\", \"Mobile\"], \"free_to_play\": true, \"release_year\": 2006}',43.53,'2025-04-17 04:37:12','https://d1th0hc7ymkxpv.cloudfront.net/videogames/Roblox.jpg','db0aaa38-1351-11f0-b8a1-0e1f5b06a03f'),('a13ad7d4-1b45-11f0-ab33-0e1f5b06a03f','Valorant','{\"genre\": \"Tactical Shooter\", \"developer\": \"Riot Games\", \"platforms\": [\"PC\"], \"free_to_play\": true, \"release_year\": 2020}',23.42,'2025-04-17 04:37:12','https://d1th0hc7ymkxpv.cloudfront.net/videogames/Valorant.webp','db0aaa38-1351-11f0-b8a1-0e1f5b06a03f'),('a13adee5-1b45-11f0-ab33-0e1f5b06a03f','League of Legends','{\"genre\": \"MOBA\", \"developer\": \"Riot Games\", \"platforms\": [\"PC\"], \"free_to_play\": true, \"release_year\": 2009}',94.33,'2025-04-17 04:37:12','https://d1th0hc7ymkxpv.cloudfront.net/videogames/League_of_Legends.jpeg','db0aaa38-1351-11f0-b8a1-0e1f5b06a03f'),('a13ae121-1b45-11f0-ab33-0e1f5b06a03f','World of Warcraft','{\"genre\": \"MMORPG\", \"developer\": \"Blizzard Entertainment\", \"platforms\": [\"PC\"], \"free_to_play\": false, \"release_year\": 2004}',19.54,'2025-04-17 04:37:12','https://d1th0hc7ymkxpv.cloudfront.net/videogames/World_of_Warcraft.jpg','db0aaa38-1351-11f0-b8a1-0e1f5b06a03f'),('ab13eab4-1352-11f0-b8a1-0e1f5b06a03f','Cyberpunk 2077','{\"genre\": \"RPG\", \"developer\": \"CD Projekt Red\", \"platforms\": [\"PC\", \"PS5\", \"Xbox Series X\"], \"release_year\": 2020}',49.99,'2025-04-07 01:50:22','https://d1th0hc7ymkxpv.cloudfront.net/videogames/Cyberpunk_2077_box_art.jpg','db0aaa38-1351-11f0-b8a1-0e1f5b06a03f'),('ab13f5ca-1352-11f0-b8a1-0e1f5b06a03f','The Witcher 3: Wild Hunt','{\"genre\": \"RPG\", \"developer\": \"CD Projekt Red\", \"platforms\": [\"PC\", \"PS4\", \"Xbox One\", \"Switch\"], \"release_year\": 2015}',39.99,'2025-04-07 01:50:22','https://d1th0hc7ymkxpv.cloudfront.net/videogames/Witcher_3_cover_art.jpg','db0aaa38-1351-11f0-b8a1-0e1f5b06a03f'),('ab13f963-1352-11f0-b8a1-0e1f5b06a03f','Red Dead Redemption II','{\"genre\": \"Action-Adventure\", \"developer\": \"Rockstar Games\", \"platforms\": [\"PC\", \"PS4\", \"Xbox One\"], \"release_year\": 2018}',59.99,'2025-04-07 01:50:22','https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg','db0aaa38-1351-11f0-b8a1-0e1f5b06a03f'),('ab13fc1a-1352-11f0-b8a1-0e1f5b06a03f','Grand Theft Auto V','{\"genre\": \"Action-Adventure\", \"developer\": \"Rockstar Games\", \"platforms\": [\"PC\", \"PS5\", \"Xbox Series X\"], \"release_year\": 2013}',29.99,'2025-04-07 01:50:22','https://d1th0hc7ymkxpv.cloudfront.net/videogames/Grand_Theft_Auto_V.png','db0aaa38-1351-11f0-b8a1-0e1f5b06a03f'),('ab13fe56-1352-11f0-b8a1-0e1f5b06a03f','Call of Duty: Modern Warfare','{\"genre\": \"FPS\", \"developer\": \"Infinity Ward\", \"platforms\": [\"PC\", \"PS4\", \"Xbox One\"], \"release_year\": 2019}',59.99,'2025-04-07 01:50:22','https://d1th0hc7ymkxpv.cloudfront.net/videogames/Call_of_Duty.jpg','db0aaa38-1351-11f0-b8a1-0e1f5b06a03f'),('ab140504-1352-11f0-b8a1-0e1f5b06a03f','The Legend of Zelda: Breath of the Wild','{\"genre\": \"Action-Adventure\", \"developer\": \"Nintendo\", \"platforms\": [\"Switch\"], \"release_year\": 2017}',59.99,'2025-04-07 01:50:22','https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg','db0aaa38-1351-11f0-b8a1-0e1f5b06a03f'),('ab140d63-1352-11f0-b8a1-0e1f5b06a03f','Fortnite','{\"genre\": \"Battle Royale\", \"developer\": \"Epic Games\", \"platforms\": [\"PC\", \"PS5\", \"Xbox Series X\", \"Mobile\"], \"free_to_play\": true, \"release_year\": 2017}',0.00,'2025-04-07 01:50:22','https://d1th0hc7ymkxpv.cloudfront.net/videogames/fortnite.jpg','db0aaa38-1351-11f0-b8a1-0e1f5b06a03f'),('ab141062-1352-11f0-b8a1-0e1f5b06a03f','Minecraft','{\"genre\": \"Sandbox\", \"developer\": \"Mojang\", \"platforms\": [\"PC\", \"PS4\", \"Xbox One\", \"Switch\", \"Mobile\"], \"release_year\": 2011}',26.95,'2025-04-07 01:50:22','https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg','db0aaa38-1351-11f0-b8a1-0e1f5b06a03f'),('ab1412a2-1352-11f0-b8a1-0e1f5b06a03f','FIFA 23','{\"genre\": \"Sports\", \"developer\": \"EA Sports\", \"platforms\": [\"PC\", \"PS5\", \"Xbox Series X\"], \"release_year\": 2022}',59.99,'2025-04-07 01:50:22','https://d1th0hc7ymkxpv.cloudfront.net/videogames/fifa23.jpg','db0aaa38-1351-11f0-b8a1-0e1f5b06a03f'),('ab141480-1352-11f0-b8a1-0e1f5b06a03f','Apex Legends','{\"genre\": \"Battle Royale\", \"developer\": \"Respawn Entertainment\", \"platforms\": [\"PC\", \"PS5\", \"Xbox Series X\"], \"free_to_play\": true, \"release_year\": 2019}',66.78,'2025-04-07 01:50:22','https://d1th0hc7ymkxpv.cloudfront.net/videogames/apex.jpg','db0aaa38-1351-11f0-b8a1-0e1f5b06a03f'),('aefeed4d-1352-11f0-b8a1-0e1f5b06a03f','Fortnite V-Bucks 1000','{\"game\": \"Fortnite\", \"currency\": \"V-Bucks\", \"delivery\": \"instant\", \"platforms\": [\"PC\", \"PS5\", \"Xbox Series X\", \"Mobile\"]}',9.99,'2025-04-07 01:50:29','https://d1th0hc7ymkxpv.cloudfront.net/coins/Fortnite_VBucks.webp','db0aaed7-1351-11f0-b8a1-0e1f5b06a03f'),('aefef479-1352-11f0-b8a1-0e1f5b06a03f','GTA Online Shark Card ($1M)','{\"game\": \"Grand Theft Auto V\", \"currency\": \"GTA$\", \"delivery\": \"24h\", \"platforms\": [\"PC\", \"PS5\", \"Xbox Series X\"]}',19.99,'2025-04-07 01:50:29','https://d1th0hc7ymkxpv.cloudfront.net/coins/GTA_Shark_Card.jpg','db0aaed7-1351-11f0-b8a1-0e1f5b06a03f'),('aefef6cd-1352-11f0-b8a1-0e1f5b06a03f','Apex Legends Coins 1000','{\"game\": \"Apex Legends\", \"currency\": \"Apex Coins\", \"delivery\": \"instant\", \"platforms\": [\"PC\", \"PS5\", \"Xbox Series X\"]}',9.99,'2025-04-07 01:50:29','https://d1th0hc7ymkxpv.cloudfront.net/coins/apex-coin.png','db0aaed7-1351-11f0-b8a1-0e1f5b06a03f'),('aefef86e-1352-11f0-b8a1-0e1f5b06a03f','Call of Duty Points 2400','{\"game\": \"Call of Duty: Modern Warfare\", \"currency\": \"COD Points\", \"delivery\": \"instant\", \"platforms\": [\"PC\", \"PS5\", \"Xbox Series X\"]}',19.99,'2025-04-07 01:50:29','https://d1th0hc7ymkxpv.cloudfront.net/coins/cod.webp','db0aaed7-1351-11f0-b8a1-0e1f5b06a03f'),('aefefa85-1352-11f0-b8a1-0e1f5b06a03f','FIFA 23 Ultimate Points 1600','{\"game\": \"FIFA 23\", \"currency\": \"FIFA Points\", \"delivery\": \"instant\", \"platforms\": [\"PC\", \"PS5\", \"Xbox Series X\"]}',19.99,'2025-04-07 01:50:29','https://d1th0hc7ymkxpv.cloudfront.net/coins/fifapoints.jpg','db0aaed7-1351-11f0-b8a1-0e1f5b06a03f'),('aeff0275-1352-11f0-b8a1-0e1f5b06a03f','Minecraft Coins 5000','{\"game\": \"Minecraft\", \"currency\": \"Minecoins\", \"delivery\": \"instant\", \"platforms\": [\"PC\", \"Mobile\"]}',9.99,'2025-04-07 01:50:29','https://d1th0hc7ymkxpv.cloudfront.net/coins/Minecoins.png','db0aaed7-1351-11f0-b8a1-0e1f5b06a03f'),('aeff05a0-1352-11f0-b8a1-0e1f5b06a03f','Robux 800','{\"game\": \"Roblox\", \"currency\": \"Robux\", \"delivery\": \"instant\", \"platforms\": [\"PC\", \"Mobile\"]}',9.99,'2025-04-07 01:50:29','https://d1th0hc7ymkxpv.cloudfront.net/coins/Robux.png','db0aaed7-1351-11f0-b8a1-0e1f5b06a03f'),('aeff0819-1352-11f0-b8a1-0e1f5b06a03f','Valorant Points 1000','{\"game\": \"Valorant\", \"currency\": \"VP\", \"delivery\": \"instant\", \"platforms\": [\"PC\"]}',9.99,'2025-04-07 01:50:29','https://d1th0hc7ymkxpv.cloudfront.net/coins/Valorant_Points.webp','db0aaed7-1351-11f0-b8a1-0e1f5b06a03f'),('aeff0a1b-1352-11f0-b8a1-0e1f5b06a03f','World of Warcraft Token','{\"game\": \"World of Warcraft\", \"currency\": \"WoW Token\", \"delivery\": \"instant\", \"game_time\": \"30 days\", \"platforms\": [\"PC\"]}',19.99,'2025-04-07 01:50:29','https://d1th0hc7ymkxpv.cloudfront.net/coins/WoW_Token.png','db0aaed7-1351-11f0-b8a1-0e1f5b06a03f'),('aeff0c29-1352-11f0-b8a1-0e1f5b06a03f','League of Legends RP 1380','{\"game\": \"League of Legends\", \"currency\": \"Riot Points\", \"delivery\": \"instant\", \"platforms\": [\"PC\"]}',9.99,'2025-04-07 01:50:29','https://d1th0hc7ymkxpv.cloudfront.net/coins/LoL_RP.png','db0aaed7-1351-11f0-b8a1-0e1f5b06a03f');
+
+
+--
+-- Table structure for table `shopping_cart`
+--
+
+DROP TABLE IF EXISTS `shopping_cart`;
+
+CREATE TABLE `shopping_cart` (
+  `cart_id` varchar(50) NOT NULL DEFAULT (uuid()),
+  `user_id` varchar(50) NOT NULL,
+  `products` json NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`cart_id`),
+  UNIQUE KEY `user_id_UNIQUE` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `shopping_cart`
+--
+
+
+INSERT INTO `shopping_cart` VALUES ('12872b22-22fd-11f0-9d83-0e1f5b06a03f','03efef89-2d96-46e7-8a75-a6292fad4c45','[]','2025-04-27 00:17:58','2025-04-27 00:17:58'),('16e14c25-252c-11f0-9d83-0e1f5b06a03f','ed6a11ae-4a82-4fd2-bd52-688f06e8078a','[{\"id\": \"a13a5554-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"Roblox\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Roblox.jpg\"}]','2025-04-29 18:59:34','2025-04-29 19:00:13'),('513508ea-25ca-11f0-9d83-0e1f5b06a03f','749c3383-9780-4a57-b36c-bd8b65b9eaac','[{\"id\": \"a13ad7d4-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"Valorant\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Valorant.webp\"}, {\"id\": \"aefef479-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"GTA Online Shark Card ($1M)\", \"price\": 19.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/coins/GTA_Shark_Card.jpg\"}, {\"id\": \"aefeed4d-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Fortnite V-Bucks 1000\", \"price\": 9.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/coins/Fortnite_VBucks.webp\"}]','2025-04-30 13:52:12','2025-04-30 14:29:07'),('574fbd78-2323-11f0-9d83-0e1f5b06a03f','22480e7a-4755-46b0-9cfb-983d2a56c348','[]','2025-04-27 04:51:54','2025-04-27 19:57:45'),('5abdde36-204a-11f0-9d83-0e1f5b06a03f','7447f1c4-2d7d-4703-86f1-0edc7bf40be5','[]','2025-04-23 13:53:37','2025-04-23 14:39:09'),('5ed465ec-1afc-11f0-ab33-0e1f5b06a03f','2c096699-119b-11f0-95ba-0e1f5b06a03f','[{\"id\": \"ab13eab4-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Cyberpunk 2077\", \"price\": 49.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Cyberpunk_2077_box_art.jpg\"}, {\"id\": \"aeff0275-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft Coins 5000\", \"price\": 9.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/coins/Minecoins.png\"}]','2025-04-16 19:52:47','2025-04-22 22:25:55'),('75ee383d-1f89-11f0-9d83-0e1f5b06a03f','2c095f28-119b-11f0-95ba-0e1f5b06a03f','[{\"id\": \"ab13fe56-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Call of Duty: Modern Warfare\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Call_of_Duty.jpg\"}]','2025-04-22 14:52:49','2025-04-30 13:25:14'),('89454630-1fb4-11f0-9d83-0e1f5b06a03f','29cbec7e-d372-4982-99a5-5767bb5c9b68','[]','2025-04-22 20:01:10','2025-04-22 20:01:10'),('8b76f4d3-250e-11f0-9d83-0e1f5b06a03f','ff614429-a5fd-4ab0-b05e-2252a7717fe1','[{\"id\": \"ab141062-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Minecraft\", \"price\": 26.95, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/mc.jpg\"}]','2025-04-29 15:28:04','2025-04-29 15:29:56'),('966deed0-231e-11f0-9d83-0e1f5b06a03f','87f15397-d3ee-4ebf-83f4-2c11e8a744c8','[{\"id\": \"ab13fe56-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Call of Duty: Modern Warfare\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Call_of_Duty.jpg\"}]','2025-04-27 04:17:52','2025-04-27 05:37:01'),('a15ac434-1f89-11f0-9d83-0e1f5b06a03f','2c096491-119b-11f0-95ba-0e1f5b06a03f','[{\"id\": \"ab1412a2-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"FIFA 23\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/fifa23.jpg\"}, {\"id\": \"a13a5554-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"Roblox\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Roblox.jpg\"}]','2025-04-22 14:54:02','2025-04-29 21:57:22'),('bb39d765-1f89-11f0-9d83-0e1f5b06a03f','2c0967c1-119b-11f0-95ba-0e1f5b06a03f','[{\"id\": \"a13ad7d4-1b45-11f0-ab33-0e1f5b06a03f\", \"name\": \"Valorant\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Valorant.webp\"}, {\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}]','2025-04-22 14:54:46','2025-04-30 13:56:45'),('c7bd26f2-1f89-11f0-9d83-0e1f5b06a03f','2c095a54-119b-11f0-95ba-0e1f5b06a03f','[{\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}, {\"id\": \"aefef6cd-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Apex Legends Coins 1000\", \"price\": 9.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/coins/apex-coin.png\"}, {\"id\": \"ab140d63-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Fortnite\", \"price\": 0, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/fortnite.jpg\"}]','2025-04-22 14:55:07','2025-04-29 17:42:02'),('ccd848b7-2521-11f0-9d83-0e1f5b06a03f','0ab1f74f-2504-49e1-a16e-710e459166c1','[{\"id\": \"ab13f963-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"Red Dead Redemption II\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Red_Dead_Redemption_II.jpg\"}, {\"id\": \"ab140504-1352-11f0-b8a1-0e1f5b06a03f\", \"name\": \"The Legend of Zelda: Breath of the Wild\", \"price\": 59.99, \"quantity\": 1, \"image_url\": \"https://d1th0hc7ymkxpv.cloudfront.net/videogames/Zelda.jpg\"}]','2025-04-29 17:45:54','2025-04-29 18:16:06');
+
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `user_id` varchar(50) NOT NULL DEFAULT (uuid()),
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `password_hash` varchar(255) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `birth_date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `avatar` varchar(255) DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT '1',
+  `challenge_level_id` int DEFAULT '0',
+  `challenge_progress` int DEFAULT '0',
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` VALUES ('03efef89-2d96-46e7-8a75-a6292fad4c45',NULL,NULL,'prueba1','jason3@example.com','$2b$12$kxzJQX3y89.7uCvn7LSCteottLdds5sQIhYjx2rSGuzRNJI2Y9Lyy','6001-0099','2002-06-19','2025-04-27 00:17:57',NULL,0,0,0),('0ab1f74f-2504-49e1-a16e-710e459166c1',NULL,NULL,'torton','torton@gmail.com','$2b$12$HdegE39EHByuBb3dzB97N.p.xOSCSS45G9iz4.IpVzkYsbWc482aS','66666666','1966-04-29','2025-04-29 17:45:54',NULL,0,0,0),('22480e7a-4755-46b0-9cfb-983d2a56c348',NULL,NULL,'admin','admin@example.com','$2b$12$pkE6JpcdzczYLZGYatA9zOACdoeJ91qdGxDK7uIXPZSDubrXXyYqe','12345678','2002-01-26','2025-04-27 04:51:54',NULL,1,0,0),('2c095a54-119b-11f0-95ba-0e1f5b06a03f','Jack','Lee','jack','jack@example.com','$2a$12$1jplF2S.vseoYiRM4xBEXeMXUKD.PTR2ujeNpanzqCY3kTxbNKQKG','1234567890','1990-01-01','2025-04-04 21:24:20','https://images.pexels.com/photos/31492768/pexels-photo-31492768.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',1,0,0),('2c095f28-119b-11f0-95ba-0e1f5b06a03f','Jeremy','Scotte','jeremy','jeremy@example.com','$2b$12$xf3bvDi5qMV1bArBmgNW6eR5Kg5iWW53nU8IFyr1AKd4ckDPJ8nRC','0987654321','1992-02-02','2025-04-04 21:24:20','https://images.pexels.com/photos/15835620/pexels-photo-15835620/free-photo-of-hombre-modelo-maqueta-en-pie.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',1,0,0),('2c096491-119b-11f0-95ba-0e1f5b06a03f','Carlos','Gonzáles','carlos','carlos@example.com','$2a$12$JaVynvxUKSfZk4g3OBqJmePCTdSVac5WB5E5mh/yvhcpDpHxXpJtK','1122334455','1985-03-03','2025-04-04 21:24:20','https://images.pexels.com/photos/31456022/pexels-photo-31456022.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',1,0,0),('2c096699-119b-11f0-95ba-0e1f5b06a03f','Adriana','Sanches','adriana','adriana@example.com','$2a$12$DowOjwjrU1qbp2q4X7ykVuWbHFGnEv7b3PqtyoiGoNKs9QhStMmBS','2233445566','1995-04-04','2025-04-04 21:24:20','https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',1,2,7),('2c0967c1-119b-11f0-95ba-0e1f5b06a03f','Jason','Núñez','jason','jason@example.com','$2a$12$gsdTCY389hWiGgpHpThaG.QbpxRgi.yWqerB4Nlk0Pigmf35QyYGm','3344556677','1988-05-05','2025-04-04 21:24:20','',1,0,0),('7447f1c4-2d7d-4703-86f1-0edc7bf40be5',NULL,NULL,'pepito','pepito@gmail.com','$2b$12$Mezj0dZ3a9UVjHacplyv/OujhVxrx3lU/zURij1rohbryTVcI1uFG','66666666','2000-11-11','2025-04-23 13:53:37',NULL,1,0,0),('749c3383-9780-4a57-b36c-bd8b65b9eaac',NULL,NULL,'alexpruebas','email.alexandra.testing@gmail.com','$2b$12$bk5fj7mZpO4YUU/aoaW3qeHG5FzffUAeVlFsDwGejuKFFqI0l9ZBO','62296134','1988-10-19','2025-04-30 13:52:12',NULL,0,0,0),('87f15397-d3ee-4ebf-83f4-2c11e8a744c8',NULL,NULL,'prueba2','prueba2@example.com','$2b$12$xD.BWD61wrcplLQC87gRYuQJ7TK7cmdQ1.AB2vPgarUEX1Jp/C6Ca','6001-0099','2002-06-19','2025-04-27 04:17:52',NULL,0,0,0),('ed6a11ae-4a82-4fd2-bd52-688f06e8078a',NULL,NULL,'pepo','pepo@gmail.com','$2b$12$8UMQDO8z3DE1phDk4eWOfurMuah9NA4suajFYDYekqN3ljP0BKDhK','66666666','1979-04-30','2025-04-29 18:59:34',NULL,1,0,0),('ff614429-a5fd-4ab0-b05e-2252a7717fe1',NULL,NULL,'jack2','asdaj@sdfs','$2b$12$jNsUwVHG8j8WGI0hF43Tve.j0g.HhSVzalWdD6xVFlz6cq0krGGga','12345678','2005-03-04','2025-04-29 15:28:04',NULL,1,0,0);
+
+--
+-- Table structure for table `wallet`
+--
+
+DROP TABLE IF EXISTS `wallet`;
+
+CREATE TABLE `wallet` (
+  `wallet_id` varchar(50) NOT NULL DEFAULT (uuid()),
+  `user_id` varchar(50) NOT NULL,
+  `balance` decimal(10,2) DEFAULT '0.00',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wallet_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+--
+-- Dumping data for table `wallet`
+--
+
+INSERT INTO `wallet` VALUES ('162f51a3-fd39-4ccc-95bc-f46a91d537d2','7447f1c4-2d7d-4703-86f1-0edc7bf40be5',0.02,'2025-04-23 13:53:37'),('16c51bac-5f43-4828-84ab-edf62f0b71bb','29cbec7e-d372-4982-99a5-5767bb5c9b68',0.00,'2025-04-22 20:01:10'),('1919eddd-e81a-4861-b19d-5ebf28baf632','03efef89-2d96-46e7-8a75-a6292fad4c45',0.00,'2025-04-27 00:17:58'),('2506d63e-de9f-4566-82ec-d22ce5517a08','749c3383-9780-4a57-b36c-bd8b65b9eaac',0.14,'2025-04-30 13:52:12'),('3684346c-46e8-4794-ab32-9628dd0bf2b6','2c096491-119b-11f0-95ba-0e1f5b06a03f',0.13,'2025-04-21 21:27:31'),('3b43bd77-14dc-4888-992d-932ec30c84a2','ed6a11ae-4a82-4fd2-bd52-688f06e8078a',0.00,'2025-04-29 18:59:34'),('48c8a25b-0978-45e0-b696-07f7ee5c8fa4','2c095f28-119b-11f0-95ba-0e1f5b06a03f',13.06,'2025-04-21 14:22:32'),('851413d3-1fa4-11f0-9d83-0e1f5b06a03f','2c096699-119b-11f0-95ba-0e1f5b06a03f',0.02,'2025-04-22 18:06:31'),('d1de662c-68d7-4cbc-91bc-c029eae4a5ac','87f15397-d3ee-4ebf-83f4-2c11e8a744c8',0.00,'2025-04-27 04:17:52'),('d5652ba0-3469-492c-ba71-c896aa000eac','22480e7a-4755-46b0-9cfb-983d2a56c348',0.06,'2025-04-27 04:51:54'),('de04d195-96be-4a23-8298-bad91f092a31','ff614429-a5fd-4ab0-b05e-2252a7717fe1',0.00,'2025-04-29 15:28:04'),('f086d110-a6c3-4d0d-a241-5351aeff1a8f','0ab1f74f-2504-49e1-a16e-710e459166c1',60.01,'2025-04-29 17:45:54'),('f8153d67-b4db-49d7-a91b-5c0ab911a13a','2c0967c1-119b-11f0-95ba-0e1f5b06a03f',0.01,'2025-04-21 17:41:31'),('fd8baeff-cf52-46d2-8d06-a1697f683a45','2c095a54-119b-11f0-95ba-0e1f5b06a03f',0.00,'2025-04-22 13:16:59');
+
+--
+-- Dumping routines for database 'gamervaultlts'
+--

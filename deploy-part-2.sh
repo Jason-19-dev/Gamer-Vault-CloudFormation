@@ -40,7 +40,10 @@ aws cloudformation deploy \
     TargetGroupArnProduct=$TARGET_GROUP_ARN_PRODUCT \
     TargetGroupArnWallet=$TARGET_GROUP_ARN_WALLET \
     FargateSecurityGroupId=$FARGATE_SG \
-    ContainerImage=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/test-app:latest \
+    AuthContainerImage=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/auth-api:latest \
+    OrdersContainerImage=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/orders-api:latest \
+    ProductsContainerImage=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/products-api:latest \
+    WalletContainerImage=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/wallet-api:latest \
     AuroraSecretArn=$AURORA_SECRET_ARN \
     AuroraHost=$AURORA_HOST
 

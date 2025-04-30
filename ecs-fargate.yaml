@@ -8,9 +8,21 @@ Parameters:
   PrivateSubnets:
     Type: List<AWS::EC2::Subnet::Id>
 
-  ContainerImage:
+  AuthContainerImage:
     Type: String
-    Description: Imagen ECR de la app (ej. 123456789.dkr.ecr.us-east-1.amazonaws.com/demo-app:latest)
+    Description: Imagen Auth ECR de la app
+
+  OrdersContainerImage:
+    Type: String
+    Description: Imagen Orders ECR de la app
+
+  ProductsContainerImage:
+    Type: String
+    Description: Imagen Products ECR de la app
+
+  WalletContainerImage:
+    Type: String
+    Description: Imagen Wallet ECR de la app
 
   TargetGroupArnAuth:
     Type: String
@@ -55,20 +67,19 @@ Resources:
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
-          - Effect: Allow
-            Principal:
-              Service: ecs-tasks.amazonaws.com
-            Action: sts:AssumeRole
+        - Effect: Allow
+          Principal:
+            Service: ecs-tasks.amazonaws.com
+          Action: sts:AssumeRole
       Policies:
-        - PolicyName: AccessToAuroraSecrets
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Effect: Allow
-                Action:
-                  - secretsmanager:GetSecretValue
-                Resource: !Ref AuroraSecretArn
-
+      - PolicyName: AccessToAuroraSecrets
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+          - Effect: Allow
+            Action:
+            - secretsmanager:GetSecretValue
+            Resource: !Ref AuroraSecretArn
 
   # IAM Role para ejecutar la tarea (logs, etc.)
   TaskExecutionRole:
@@ -78,74 +89,239 @@ Resources:
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
-          - Effect: Allow
-            Principal:
-              Service: ecs-tasks.amazonaws.com
-            Action: sts:AssumeRole
+        - Effect: Allow
+          Principal:
+            Service: ecs-tasks.amazonaws.com
+          Action: sts:AssumeRole
       ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+      - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
 
   GamerLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
       LogGroupName: /ecs/gamer-app
       RetentionInDays: 7
-  
 
+  #Auth
   # Task Definition
-  GamerTaskDefinition:
+  GamerAuthTaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: gamer-task
+      Family: gamer-auth-task
       Cpu: '512'
       Memory: '1024'
       NetworkMode: awsvpc
-      RequiresCompatibilities: [FARGATE]
+      RequiresCompatibilities: [ FARGATE ]
       ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
       TaskRoleArn: !GetAtt FargateTaskRole.Arn
       ContainerDefinitions:
-        - Name: productapi-container
-          Image: !Ref ContainerImage
-          PortMappings:
-            - ContainerPort: 5000
-              Protocol: tcp
-          Environment:
-            - Name: AURORA_HOST
-              Value: !Ref AuroraHost
-            - Name: AURORA_PORT
-              Value: !Ref AuroraPort
-            - Name: AURORA_SECRET_ARN
-              Value: !Ref AuroraSecretArn
-          LogConfiguration:
-            LogDriver: awslogs
-            Options:
-              awslogs-group: /ecs/gamer-app
-              awslogs-region: !Ref AWS::Region
-              awslogs-stream-prefix: gamer
+      - Name: authapi-container
+        Image: !Ref AuthContainerImage
+        PortMappings:
+        - ContainerPort: 5000
+          Protocol: tcp
+        Environment:
+        - Name: AURORA_HOST
+          Value: !Ref AuroraHost
+        - Name: AURORA_PORT
+          Value: !Ref AuroraPort
+        - Name: AURORA_SECRET_ARN
+          Value: !Ref AuroraSecretArn
+        LogConfiguration:
+          LogDriver: awslogs
+          Options:
+            awslogs-group: /ecs/gamer-app
+            awslogs-region: !Ref AWS::Region
+            awslogs-stream-prefix: auth
 
   # ECS Service con 1 réplica en Fargate
-  GamerEcsService:
+  GamerAuthEcsService:
     Type: AWS::ECS::Service
     DependsOn: GamerEcsCluster
     Properties:
-      ServiceName: gamer-ecs-service
+      ServiceName: gamer-auth-ecs-service
       Cluster: !Ref GamerEcsCluster
       LaunchType: FARGATE
       DesiredCount: 1
-      TaskDefinition: !Ref GamerTaskDefinition
+      TaskDefinition: !Ref GamerAuthTaskDefinition
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: DISABLED
           Subnets: !Ref PrivateSubnets
-          SecurityGroups: [!Ref FargateSecurityGroupId]
+          SecurityGroups: [ !Ref FargateSecurityGroupId ]
       LoadBalancers:
-        - TargetGroupArn: !Ref TargetGroupArnProduct
-          ContainerName: productapi-container
-          ContainerPort: 5000
+      - TargetGroupArn: !Ref TargetGroupArnAuth
+        ContainerName: authapi-container
+        ContainerPort: 5000
+
+  #Order
+  # Task Definition
+  GamerOrderTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: gamer-order-task
+      Cpu: '512'
+      Memory: '1024'
+      NetworkMode: awsvpc
+      RequiresCompatibilities: [ FARGATE ]
+      ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
+      TaskRoleArn: !GetAtt FargateTaskRole.Arn
+      ContainerDefinitions:
+      - Name: orderapi-container
+        Image: !Ref OrdersContainerImage
+        PortMappings:
+        - ContainerPort: 5000
+          Protocol: tcp
+        Environment:
+        - Name: AURORA_HOST
+          Value: !Ref AuroraHost
+        - Name: AURORA_PORT
+          Value: !Ref AuroraPort
+        - Name: AURORA_SECRET_ARN
+          Value: !Ref AuroraSecretArn
+        LogConfiguration:
+          LogDriver: awslogs
+          Options:
+            awslogs-group: /ecs/gamer-app
+            awslogs-region: !Ref AWS::Region
+            awslogs-stream-prefix: order
+
+  # ECS Service con 1 réplica en Fargate
+  GamerOrderEcsService:
+    Type: AWS::ECS::Service
+    DependsOn: GamerEcsCluster
+    Properties:
+      ServiceName: gamer-order-ecs-service
+      Cluster: !Ref GamerEcsCluster
+      LaunchType: FARGATE
+      DesiredCount: 1
+      TaskDefinition: !Ref GamerOrderTaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: DISABLED
+          Subnets: !Ref PrivateSubnets
+          SecurityGroups: [ !Ref FargateSecurityGroupId ]
+      LoadBalancers:
+      - TargetGroupArn: !Ref TargetGroupArnOrder
+        ContainerName: orderapi-container
+        ContainerPort: 5000
+
+  #Product
+  # Task Definition
+  GamerProductTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: gamer-product-task
+      Cpu: '512'
+      Memory: '1024'
+      NetworkMode: awsvpc
+      RequiresCompatibilities: [ FARGATE ]
+      ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
+      TaskRoleArn: !GetAtt FargateTaskRole.Arn
+      ContainerDefinitions:
+      - Name: productapi-container
+        Image: !Ref ProductsContainerImage
+        PortMappings:
+        - ContainerPort: 5000
+          Protocol: tcp
+        Environment:
+        - Name: AURORA_HOST
+          Value: !Ref AuroraHost
+        - Name: AURORA_PORT
+          Value: !Ref AuroraPort
+        - Name: AURORA_SECRET_ARN
+          Value: !Ref AuroraSecretArn
+        LogConfiguration:
+          LogDriver: awslogs
+          Options:
+            awslogs-group: /ecs/gamer-app
+            awslogs-region: !Ref AWS::Region
+            awslogs-stream-prefix: product
+
+  # ECS Service con 1 réplica en Fargate
+  GamerProductEcsService:
+    Type: AWS::ECS::Service
+    DependsOn: GamerEcsCluster
+    Properties:
+      ServiceName: gamer-product-ecs-service
+      Cluster: !Ref GamerEcsCluster
+      LaunchType: FARGATE
+      DesiredCount: 1
+      TaskDefinition: !Ref GamerProductTaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: DISABLED
+          Subnets: !Ref PrivateSubnets
+          SecurityGroups: [ !Ref FargateSecurityGroupId ]
+      LoadBalancers:
+      - TargetGroupArn: !Ref TargetGroupArnProduct
+        ContainerName: productapi-container
+        ContainerPort: 5000
+
+  #Wallet
+  # Task Definition
+  GamerWalletTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: gamer-wallet-task
+      Cpu: '512'
+      Memory: '1024'
+      NetworkMode: awsvpc
+      RequiresCompatibilities: [ FARGATE ]
+      ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
+      TaskRoleArn: !GetAtt FargateTaskRole.Arn
+      ContainerDefinitions:
+      - Name: walletapi-container
+        Image: !Ref WalletContainerImage
+        PortMappings:
+        - ContainerPort: 5000
+          Protocol: tcp
+        Environment:
+        - Name: AURORA_HOST
+          Value: !Ref AuroraHost
+        - Name: AURORA_PORT
+          Value: !Ref AuroraPort
+        - Name: AURORA_SECRET_ARN
+          Value: !Ref AuroraSecretArn
+        LogConfiguration:
+          LogDriver: awslogs
+          Options:
+            awslogs-group: /ecs/gamer-app
+            awslogs-region: !Ref AWS::Region
+            awslogs-stream-prefix: wallet
+
+  # ECS Service con 1 réplica en Fargate
+  GamerWalletEcsService:
+    Type: AWS::ECS::Service
+    DependsOn: GamerEcsCluster
+    Properties:
+      ServiceName: gamer-wallet-ecs-service
+      Cluster: !Ref GamerEcsCluster
+      LaunchType: FARGATE
+      DesiredCount: 1
+      TaskDefinition: !Ref GamerWalletTaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: DISABLED
+          Subnets: !Ref PrivateSubnets
+          SecurityGroups: [ !Ref FargateSecurityGroupId ]
+      LoadBalancers:
+      - TargetGroupArn: !Ref TargetGroupArnWallet
+        ContainerName: walletapi-container
+        ContainerPort: 5000
 
 Outputs:
   EcsClusterName:
     Value: !Ref GamerEcsCluster
 
-  EcsServiceName:
-    Value: !Ref GamerEcsService
+  EcsAuthServiceName:
+    Value: !Ref GamerAuthEcsService
+
+  EcsOrdersServiceName:
+    Value: !Ref GamerOrderEcsService
+
+  EcsProductServiceName:
+    Value: !Ref GamerProductEcsService
+
+  EcsWalletServiceName:
+    Value: !Ref GamerWalletEcsService

@@ -493,7 +493,7 @@ Resources:
     Properties:
       RestApiId: !Ref RestApi
       ParentId: !Ref ProductsResource
-      PathPart: '{product_id}'
+      PathPart: "{product_id}"
 
   ProductIdGetMethod:
     Type: AWS::ApiGateway::Method
@@ -509,7 +509,7 @@ Resources:
       Integration:
         Type: HTTP
         IntegrationHttpMethod: GET
-        Uri: !Sub "http://${NlbDns}:5003/products/{product_id}"
+        Uri: !Sub "http://${NlbDns}:5003/products/{product_id}/"
         ConnectionType: VPC_LINK
         ConnectionId: !Ref VpcLink
         PassthroughBehavior: WHEN_NO_MATCH
@@ -815,7 +815,7 @@ Resources:
       Integration:
         Type: HTTP
         IntegrationHttpMethod: POST
-        Uri: !Sub "http://${NlbDns}:5001/shoppingcart"
+        Uri: !Sub "http://${NlbDns}:5003/shoppingcart"
         ConnectionType: VPC_LINK
         ConnectionId: !Ref VpcLink
         PassthroughBehavior: WHEN_NO_MATCH
@@ -853,7 +853,66 @@ Resources:
           method.response.header.Access-Control-Allow-Headers: true
           method.response.header.Access-Control-Allow-Methods: true
           method.response.header.Access-Control-Allow-Origin: true
+
   #Resource /shoppingcart/update post
+  CartUpdateResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref RestApi
+      ParentId: !Ref CartResource
+      PathPart: update
+
+  CartUpdatePostMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref RestApi
+      ResourceId: !Ref CartUpdateResource
+      HttpMethod: POST
+      AuthorizationType: NONE #Colocar CUSTOM si se va a usar la Lambda Auth
+      # AuthorizationId: !Ref Authorizer
+      RequestParameters:
+        method.request.header.Authorization: true
+      Integration:
+        Type: HTTP
+        IntegrationHttpMethod: POST
+        Uri: !Sub "http://${NlbDns}:5003/shoppingcart/update"
+        ConnectionType: VPC_LINK
+        ConnectionId: !Ref VpcLink
+        PassthroughBehavior: WHEN_NO_MATCH
+        RequestParameters:
+          integration.request.header.Authorization: method.request.header.Authorization
+        IntegrationResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
+      - StatusCode: 200
+        ResponseParameters:
+          method.response.header.Access-Control-Allow-Origin: true
+
+  CartUpdateOptionsMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref RestApi
+      ResourceId: !Ref CartUpdateResource
+      HttpMethod: OPTIONS
+      AuthorizationType: NONE
+      Integration:
+        Type: MOCK
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+        IntegrationResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+            method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
+      - StatusCode: 200
+        ResponseParameters:
+          method.response.header.Access-Control-Allow-Headers: true
+          method.response.header.Access-Control-Allow-Methods: true
+          method.response.header.Access-Control-Allow-Origin: true
 
   #Resource /users
   UsersResource:
@@ -1123,15 +1182,6 @@ Resources:
           method.response.header.Access-Control-Allow-Headers: true
           method.response.header.Access-Control-Allow-Methods: true
           method.response.header.Access-Control-Allow-Origin: true
-
-  ApiDeployment:
-    Type: AWS::ApiGateway::Deployment
-    DependsOn:
-    - VideogamesGetMethod
-    - VideogamesOptionsMethod
-    Properties:
-      RestApiId: !Ref RestApi
-      StageName: prod
 
   LambdaPermissionForApiGateway:
     Type: AWS::Lambda::Permission
