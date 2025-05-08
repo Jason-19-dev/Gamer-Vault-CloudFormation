@@ -509,7 +509,7 @@ Resources:
       Integration:
         Type: HTTP
         IntegrationHttpMethod: GET
-        Uri: !Sub "http://${NlbDns}:5003/products/{product_id}/"
+        Uri: !Sub "http://${NlbDns}:5003/products/{product_id}"
         ConnectionType: VPC_LINK
         ConnectionId: !Ref VpcLink
         PassthroughBehavior: WHEN_NO_MATCH
@@ -987,6 +987,66 @@ Resources:
           method.response.header.Access-Control-Allow-Methods: true
           method.response.header.Access-Control-Allow-Origin: true
 
+  #Resource /users/getlevel
+  GetLevelResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref RestApi
+      ParentId: !Ref UsersResource
+      PathPart: getlevel
+
+  GetLevelPostMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref RestApi
+      ResourceId: !Ref GetLevelResource
+      HttpMethod: POST
+      AuthorizationType: NONE #Colocar CUSTOM si se va a usar la Lambda Auth
+      # AuthorizationId: !Ref Authorizer
+      RequestParameters:
+        method.request.header.Authorization: true
+      Integration:
+        Type: HTTP
+        IntegrationHttpMethod: POST
+        Uri: !Sub "http://${NlbDns}:5001/users/getlevel"
+        ConnectionType: VPC_LINK
+        ConnectionId: !Ref VpcLink
+        PassthroughBehavior: WHEN_NO_MATCH
+        RequestParameters:
+          integration.request.header.Authorization: method.request.header.Authorization
+        IntegrationResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
+      - StatusCode: 200
+        ResponseParameters:
+          method.response.header.Access-Control-Allow-Origin: true
+
+  GetLevelOptionsMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref RestApi
+      ResourceId: !Ref GetLevelResource
+      HttpMethod: OPTIONS
+      AuthorizationType: NONE
+      Integration:
+        Type: MOCK
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+        IntegrationResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+            method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
+      - StatusCode: 200
+        ResponseParameters:
+          method.response.header.Access-Control-Allow-Headers: true
+          method.response.header.Access-Control-Allow-Methods: true
+          method.response.header.Access-Control-Allow-Origin: true
+
   #Resource /wallet
   WalletResource:
     Type: AWS::ApiGateway::Resource
@@ -1076,7 +1136,7 @@ Resources:
       AuthorizationType: NONE #Colocar CUSTOM si se va a usar la Lambda Auth
       # AuthorizationId: !Ref Authorizer
       RequestParameters:
-        method.request.path.product_id: true
+        method.request.path.user_id: true
         method.request.header.Authorization: true
       Integration:
         Type: HTTP
@@ -1086,7 +1146,7 @@ Resources:
         ConnectionId: !Ref VpcLink
         PassthroughBehavior: WHEN_NO_MATCH
         RequestParameters:
-          integration.request.path.product_id: method.request.path.product_id
+          integration.request.path.user_id: method.request.path.user_id
           integration.request.header.Authorization: method.request.header.Authorization
         IntegrationResponses:
         - StatusCode: 200
@@ -1138,7 +1198,7 @@ Resources:
       AuthorizationType: NONE #Colocar CUSTOM si se va a usar la Lambda Auth
       # AuthorizationId: !Ref Authorizer
       RequestParameters:
-        method.request.path.product_id: true
+        method.request.path.user_id: true
         method.request.header.Authorization: true
       Integration:
         Type: HTTP
@@ -1148,7 +1208,7 @@ Resources:
         ConnectionId: !Ref VpcLink
         PassthroughBehavior: WHEN_NO_MATCH
         RequestParameters:
-          integration.request.path.product_id: method.request.path.product_id
+          integration.request.path.user_id: method.request.path.user_id
           integration.request.header.Authorization: method.request.header.Authorization
         IntegrationResponses:
         - StatusCode: 200
@@ -1175,6 +1235,68 @@ Resources:
           ResponseParameters:
             method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
             method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
+      - StatusCode: 200
+        ResponseParameters:
+          method.response.header.Access-Control-Allow-Headers: true
+          method.response.header.Access-Control-Allow-Methods: true
+          method.response.header.Access-Control-Allow-Origin: true
+
+  #Resource /wallet/{user_id}/history get
+  WalletHistoryResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref RestApi
+      ParentId: !Ref WalletUserIdResource
+      PathPart: deduct
+
+  WalletHistoryGetMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref RestApi
+      ResourceId: !Ref WalletDeductResource
+      HttpMethod: GET
+      AuthorizationType: NONE #Colocar CUSTOM si se va a usar la Lambda Auth
+      # AuthorizationId: !Ref Authorizer
+      RequestParameters:
+        method.request.path.user_id: true
+        method.request.header.Authorization: true
+      Integration:
+        Type: HTTP
+        IntegrationHttpMethod: GET
+        Uri: !Sub "http://${NlbDns}:5004/wallet/{user_id}/history"
+        ConnectionType: VPC_LINK
+        ConnectionId: !Ref VpcLink
+        PassthroughBehavior: WHEN_NO_MATCH
+        RequestParameters:
+          integration.request.path.user_id: method.request.path.user_id
+          integration.request.header.Authorization: method.request.header.Authorization
+        IntegrationResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+      MethodResponses:
+      - StatusCode: 200
+        ResponseParameters:
+          method.response.header.Access-Control-Allow-Origin: true
+
+  WalletHistoryOptionsMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref RestApi
+      ResourceId: !Ref WalletDeductResource
+      HttpMethod: OPTIONS
+      AuthorizationType: NONE
+      Integration:
+        Type: MOCK
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+        IntegrationResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+            method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
             method.response.header.Access-Control-Allow-Origin: "'*'"
       MethodResponses:
       - StatusCode: 200
