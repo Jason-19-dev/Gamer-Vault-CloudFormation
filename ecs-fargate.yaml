@@ -108,8 +108,8 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: gamer-auth-task
-      Cpu: '512'
-      Memory: '1024'
+      Cpu: '1024'
+      Memory: '3072'
       NetworkMode: awsvpc
       RequiresCompatibilities: [ FARGATE ]
       ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
@@ -160,8 +160,8 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: gamer-order-task
-      Cpu: '512'
-      Memory: '1024'
+      Cpu: '1024'
+      Memory: '3072'
       NetworkMode: awsvpc
       RequiresCompatibilities: [ FARGATE ]
       ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
@@ -212,8 +212,8 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: gamer-product-task
-      Cpu: '512'
-      Memory: '1024'
+      Cpu: '1024'
+      Memory: '3072'
       NetworkMode: awsvpc
       RequiresCompatibilities: [ FARGATE ]
       ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
@@ -264,8 +264,8 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: gamer-wallet-task
-      Cpu: '512'
-      Memory: '1024'
+      Cpu: '1024'
+      Memory: '3072'
       NetworkMode: awsvpc
       RequiresCompatibilities: [ FARGATE ]
       ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
